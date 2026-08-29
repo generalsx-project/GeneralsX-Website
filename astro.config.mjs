@@ -9,7 +9,11 @@ if (!owner || !repositoryName) {
 	throw new Error(`GITHUB_REPOSITORY must use the "owner/repository" format. Received: ${repository}`);
 }
 
-const site = process.env.PUBLIC_SITE_URL ?? `https://${owner}.github.io`;
+const defaultSite =
+	repository === 'arazmj/GeneralsX-Website'
+		? 'https://www.amirrazmjou.com'
+		: `https://${owner}.github.io`;
+const site = process.env.PUBLIC_SITE_URL ?? defaultSite;
 const configuredBase = process.env.PUBLIC_BASE_PATH ?? `/${repositoryName}`;
 const base = configuredBase === '/' ? '/' : `/${configuredBase.replace(/^\/|\/$/g, '')}`;
 

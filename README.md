@@ -4,6 +4,8 @@ The standalone public website for [GeneralsX](https://github.com/fbraz3/Generals
 
 The site is built with Astro and TypeScript, reads the latest public release metadata from GitHub at build time, and deploys as a static GitHub Pages project.
 
+**Production:** <https://www.amirrazmjou.com/GeneralsX-Website/>
+
 ## Development
 
 Requirements:
@@ -40,7 +42,7 @@ Astro derives its production owner and repository name from `GITHUB_REPOSITORY`.
 | Variable | Purpose | Default |
 |---|---|---|
 | `GITHUB_REPOSITORY` | GitHub `owner/repository` identity | `arazmj/GeneralsX-Website` |
-| `PUBLIC_SITE_URL` | Pages origin or custom domain | `https://<owner>.github.io` |
+| `PUBLIC_SITE_URL` | Pages origin or custom domain | `https://www.amirrazmjou.com` for this repository |
 | `PUBLIC_BASE_PATH` | Project path, or `/` for a root/custom domain | `/<repository>` |
 | `GITHUB_TOKEN` | Raises GitHub API limits during the build | Unauthenticated public API |
 
