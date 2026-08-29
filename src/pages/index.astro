@@ -1,0 +1,522 @@
+---
+import { Picture } from 'astro:assets';
+import CallToAction from '../components/CallToAction.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import Hero from '../components/Hero.astro';
+import ReleasePanel from '../components/ReleasePanel.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import generalsIcon from '../assets/brand/generalsx-icon.png';
+import splash from '../assets/brand/generalsx-splash.png';
+import zeroHourIcon from '../assets/brand/generalsx-zh-icon.png';
+import { pathFor, site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLatestRelease } from '../lib/releases';
+
+const release = await getLatestRelease();
+---
+
+<BaseLayout>
+	<Hero release={release} />
+
+	<section class="signal-strip" aria-label="Project highlights">
+		<div class="signal-strip__inner">
+			<div><strong>03</strong><span>Operating systems</span></div>
+			<div><strong>01</strong><span>Deterministic codebase</span></div>
+			<div><strong>20+</strong><span>Years of command</span></div>
+			<div><strong>GPL</strong><span>Open source</span></div>
+		</div>
+	</section>
+
+	<section class="section mission">
+		<div class="container content-grid">
+			<div class="mission__copy">
+				<p class="eyebrow" data-reveal>Preserve the feel. Rebuild the foundation.</p>
+				<h2 data-reveal>The war room is no longer Windows-only.</h2>
+				<p class="lede" data-reveal>
+					GeneralsX keeps the retail game’s behavior intact while replacing its aging
+					platform layer with portable, maintainable systems.
+				</p>
+				<ul class="rule-list" data-reveal>
+					<li>
+						<span class="rule-list__number">01</span>
+						<span><strong>Retail compatible</strong><br /><span class="muted">Your original campaigns, maps, mods, and replays remain the mission.</span></span>
+					</li>
+					<li>
+						<span class="rule-list__number">02</span>
+						<span><strong>Cross-platform deterministic</strong><br /><span class="muted">Shared simulation rules keep Linux, macOS, and Windows on the same battlefield.</span></span>
+					</li>
+					<li>
+						<span class="rule-list__number">03</span>
+						<span><strong>Community maintained</strong><br /><span class="muted">Transparent source, public issues, reproducible releases, and upstream collaboration.</span></span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="mission__visual panel" data-reveal data-depth>
+				<Picture
+					src={splash}
+					formats={['avif']}
+					fallbackFormat="webp"
+					widths={[560, 800, 1120]}
+					sizes="(max-width: 800px) 100vw, 50vw"
+					alt="GeneralsX tactical map artwork with aircraft, armor, and the project wordmark"
+					loading="lazy"
+				/>
+				<div class="mission__target" aria-hidden="true"></div>
+				<div class="mission__visual-meta micro">
+					<span>Platform layer / modernized</span>
+					<span>Gameplay / preserved</span>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--bordered systems">
+		<div class="container">
+			<SectionHeading
+				eyebrow="Modern systems. Original strategy."
+				title="A new platform under a legendary battlefield."
+				description="The engine evolves where it must and stays faithful where it matters."
+			/>
+			<div class="systems__grid">
+				<FeatureCard
+					number="01"
+					meta="Graphics"
+					title="Vulkan-backed rendering"
+					description="DXVK carries the original Direct3D 8 renderer onto a modern, portable graphics foundation."
+				/>
+				<FeatureCard
+					number="02"
+					meta="Platform"
+					title="Native windowing"
+					description="SDL3 replaces the Windows-only shell with one platform layer across every supported build."
+				/>
+				<FeatureCard
+					number="03"
+					meta="Audio + video"
+					title="Open media stack"
+					description="OpenAL, MiniAudio, and FFmpeg replace legacy proprietary runtime dependencies."
+				/>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--bordered editions">
+		<div class="container">
+			<SectionHeading
+				eyebrow="Choose your theater"
+				title="Two campaigns. One modern command."
+				description="Deploy the original Generals experience or the expanded Zero Hour battlefield."
+			/>
+			<div class="editions__grid">
+				<article class="edition-card edition-card--zero" data-reveal>
+					<div class="edition-card__image">
+						<Picture
+							src={zeroHourIcon}
+							formats={['avif']}
+							fallbackFormat="webp"
+							widths={[320, 480, 650]}
+							sizes="(max-width: 580px) 80vw, 24rem"
+							alt="GeneralsX Zero Hour icon showing a fighter aircraft"
+							loading="lazy"
+						/>
+					</div>
+					<div class="edition-card__body">
+						<span class="micro">Primary theater</span>
+						<h3>Zero Hour</h3>
+						<p>The expansion’s factions, generals, campaigns, and multiplayer—now on every supported platform.</p>
+						<a class="button button--text" href={pathFor('/downloads')}>
+							Get Zero Hour <span class="button__arrow" aria-hidden="true">→</span>
+						</a>
+					</div>
+				</article>
+
+				<article class="edition-card edition-card--generals" data-reveal>
+					<div class="edition-card__image">
+						<Picture
+							src={generalsIcon}
+							formats={['avif']}
+							fallbackFormat="webp"
+							widths={[320, 480, 650]}
+							sizes="(max-width: 580px) 80vw, 24rem"
+							alt="GeneralsX icon showing a tank and attack helicopter"
+							loading="lazy"
+						/>
+					</div>
+					<div class="edition-card__body">
+						<span class="micro">Original campaign</span>
+						<h3>Generals</h3>
+						<p>The 2003 strategy classic, stabilized and delivered through the same cross-platform engine.</p>
+						<a class="button button--text" href={pathFor('/downloads')}>
+							Get Generals <span class="button__arrow" aria-hidden="true">→</span>
+						</a>
+					</div>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--bordered">
+		<div class="container" data-reveal>
+			<ReleasePanel release={release} compact />
+		</div>
+	</section>
+
+	<section class="section section--bordered source">
+		<div class="container source__grid">
+			<div data-reveal>
+				<p class="eyebrow">Built in the open</p>
+				<h2>Every fix has coordinates.</h2>
+			</div>
+			<div class="source__copy" data-reveal>
+				<p class="lede">
+					GeneralsX is engineering in public: source, design decisions, regressions, and
+					release work are visible to everyone.
+				</p>
+				<div class="source__stats">
+					<div><strong>500K+</strong><span>lines of engine code</span></div>
+					<div><strong>64-bit</strong><span>modern platform target</span></div>
+				</div>
+				<div class="button-row">
+					<a class="button button--primary" href={site.repository}>
+						Explore the source <span aria-hidden="true">↗</span>
+					</a>
+					<a class="button" href={pathFor('/community')}>Join the mission</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--bordered">
+		<div class="container">
+			<CallToAction
+				eyebrow="No install. Same command."
+				title="Enter the browser theater."
+				description="A community WebAssembly and WebGPU port lets you experience GeneralsX directly in a compatible browser using game data you own."
+				primaryLabel="Launch browser demo"
+				primaryHref={site.browserDemo}
+				secondaryLabel="View web port"
+				secondaryHref="https://github.com/origami-ltd/wasm-generals"
+			/>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.signal-strip {
+		border-bottom: 1px solid var(--line);
+		background: var(--ink-900);
+	}
+
+	.signal-strip__inner {
+		display: grid;
+		width: var(--content);
+		grid-template-columns: repeat(4, 1fr);
+		margin-inline: auto;
+	}
+
+	.signal-strip__inner div {
+		display: flex;
+		min-height: 7rem;
+		align-items: center;
+		gap: 0.85rem;
+		padding: 1rem clamp(0.75rem, 2vw, 1.5rem);
+		border-left: 1px solid var(--line);
+	}
+
+	.signal-strip__inner div:last-child {
+		border-right: 1px solid var(--line);
+	}
+
+	.signal-strip strong {
+		color: var(--signal-soft);
+		font-family: var(--font-display);
+		font-size: clamp(1.8rem, 4vw, 2.8rem);
+		line-height: 1;
+	}
+
+	.signal-strip span {
+		max-width: 9rem;
+		color: var(--sand-400);
+		font-family: var(--font-display);
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		line-height: 1.3;
+		text-transform: uppercase;
+	}
+
+	.mission__copy {
+		grid-column: 1 / span 6;
+		align-self: center;
+	}
+
+	.mission__copy h2 {
+		margin-bottom: 1.5rem;
+		font-size: clamp(3.2rem, 7vw, 6.2rem);
+	}
+
+	.mission__copy .lede {
+		margin-bottom: 3rem;
+	}
+
+	.mission__visual {
+		position: relative;
+		grid-column: 8 / -1;
+		min-height: 44rem;
+		overflow: hidden;
+		transform: perspective(60rem)
+			rotateX(calc(var(--pointer-y, 0) * -1.5deg))
+			rotateY(calc(var(--pointer-x, 0) * 1.5deg));
+		transition: transform 500ms var(--ease-out);
+	}
+
+	.mission__visual :global(picture),
+	.mission__visual :global(img) {
+		width: 100%;
+		height: 100%;
+	}
+
+	.mission__visual :global(img) {
+		object-fit: cover;
+	}
+
+	.mission__visual::after {
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(180deg, transparent 55%, rgb(5 8 6 / 92%)),
+			linear-gradient(90deg, rgb(88 212 255 / 6%), transparent 35%);
+		content: '';
+	}
+
+	.mission__target {
+		position: absolute;
+		z-index: 2;
+		top: 22%;
+		left: 23%;
+		width: 6rem;
+		height: 6rem;
+		border: 1px solid rgb(255 122 26 / 70%);
+		border-radius: 50%;
+		box-shadow:
+			inset 0 0 1.5rem rgb(255 122 26 / 15%),
+			0 0 2rem rgb(255 122 26 / 18%);
+	}
+
+	.mission__target::before,
+	.mission__target::after {
+		position: absolute;
+		background: rgb(255 122 26 / 70%);
+		content: '';
+	}
+
+	.mission__target::before {
+		top: 50%;
+		right: -1.3rem;
+		left: -1.3rem;
+		height: 1px;
+	}
+
+	.mission__target::after {
+		top: -1.3rem;
+		bottom: -1.3rem;
+		left: 50%;
+		width: 1px;
+	}
+
+	.mission__visual-meta {
+		position: absolute;
+		z-index: 3;
+		right: 1.5rem;
+		bottom: 1.5rem;
+		left: 1.5rem;
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		color: var(--sand-400);
+	}
+
+	.systems__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.systems__grid :global(.feature-card + .feature-card) {
+		border-left: 0;
+	}
+
+	.editions__grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.edition-card {
+		position: relative;
+		display: grid;
+		min-height: 35rem;
+		grid-template-columns: minmax(12rem, 0.9fr) minmax(16rem, 1.1fr);
+		align-items: center;
+		border: 1px solid var(--line);
+		border-radius: var(--radius-md);
+		background: var(--surface-solid);
+		overflow: hidden;
+	}
+
+	.edition-card::before {
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at 15% 50%, rgb(88 212 255 / 16%), transparent 50%);
+		content: '';
+	}
+
+	.edition-card--generals::before {
+		background: radial-gradient(circle at 15% 50%, rgb(255 122 26 / 16%), transparent 50%);
+	}
+
+	.edition-card__image,
+	.edition-card__body {
+		position: relative;
+		z-index: 1;
+	}
+
+	.edition-card__image {
+		margin-left: -30%;
+	}
+
+	.edition-card__image :global(img) {
+		filter: drop-shadow(0 1.5rem 3rem rgb(0 0 0 / 45%));
+	}
+
+	.edition-card__body {
+		padding: 2rem 2rem 2rem 0;
+	}
+
+	.edition-card__body > span {
+		color: var(--signal-soft);
+	}
+
+	.edition-card h3 {
+		margin: 0.4rem 0 1rem;
+		font-size: clamp(3rem, 6vw, 5rem);
+	}
+
+	.edition-card p {
+		color: var(--sand-400);
+	}
+
+	.source__grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: clamp(3rem, 8vw, 9rem);
+	}
+
+	.source h2 {
+		max-width: 8ch;
+	}
+
+	.source__copy {
+		align-self: end;
+	}
+
+	.source__stats {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		margin-block: 3rem;
+		border-top: 1px solid var(--line);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.source__stats div {
+		display: grid;
+		padding: 1.5rem;
+	}
+
+	.source__stats div + div {
+		border-left: 1px solid var(--line);
+	}
+
+	.source__stats strong {
+		color: var(--signal-soft);
+		font-family: var(--font-display);
+		font-size: clamp(2.5rem, 5vw, 4.5rem);
+		line-height: 1;
+	}
+
+	.source__stats span {
+		color: var(--sand-400);
+		font-size: 0.72rem;
+		text-transform: uppercase;
+	}
+
+	@media (max-width: 72rem) {
+		.editions__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 55rem) {
+		.signal-strip__inner {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.signal-strip__inner div:nth-child(2) {
+			border-right: 1px solid var(--line);
+		}
+
+		.signal-strip__inner div:nth-child(-n + 2) {
+			border-bottom: 1px solid var(--line);
+		}
+
+		.mission__copy,
+		.mission__visual {
+			grid-column: 1 / -1;
+		}
+
+		.mission__visual {
+			min-height: 35rem;
+			margin-top: 2rem;
+		}
+
+		.systems__grid {
+			grid-template-columns: 1fr;
+		}
+
+		.systems__grid :global(.feature-card + .feature-card) {
+			border-top: 0;
+			border-left: 1px solid var(--line);
+		}
+
+		.source__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 36rem) {
+		.signal-strip__inner div {
+			min-height: 6rem;
+			align-items: flex-start;
+			flex-direction: column;
+			justify-content: center;
+			gap: 0.35rem;
+		}
+
+		.mission__visual {
+			min-height: 27rem;
+		}
+
+		.edition-card {
+			min-height: auto;
+			grid-template-columns: 1fr;
+		}
+
+		.edition-card__image {
+			margin: -18% 0 -8%;
+		}
+
+		.edition-card__body {
+			padding: 1.5rem;
+		}
+	}
+</style>

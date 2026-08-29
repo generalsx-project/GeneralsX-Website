@@ -1,0 +1,137 @@
+---
+import CallToAction from '../components/CallToAction.astro';
+import ReleasePanel from '../components/ReleasePanel.astro';
+import { site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLatestRelease } from '../lib/releases';
+
+const release = await getLatestRelease();
+---
+
+<BaseLayout
+	title="Downloads"
+	description="Download the latest GeneralsX builds for Linux, macOS, and Windows."
+>
+	<header class="page-hero">
+		<div class="container--narrow">
+			<p class="eyebrow" data-reveal>Deployment center</p>
+			<h1 data-reveal>Choose your platform.</h1>
+			<p class="lede" data-reveal>
+				Official builds for Linux, macOS, and Windows. One release line, two campaigns, and
+				the original game data you already own.
+			</p>
+		</div>
+	</header>
+
+	<section class="section section--compact">
+		<div class="container--narrow">
+			<div class="notice" data-reveal>
+				<div class="notice__mark" aria-hidden="true">!</div>
+				<div>
+					<h2>Bring your own battlefield</h2>
+					<p>
+						GeneralsX contains the open-source engine, not Electronic Arts’ original art,
+						audio, maps, or other game data. You must own a legitimate copy of Command
+						&amp; Conquer: Generals or Zero Hour.
+					</p>
+					<a href={site.gameFiles}>How to get the game files <span aria-hidden="true">↗</span></a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--compact">
+		<div class="container" data-reveal>
+			<ReleasePanel release={release} />
+		</div>
+	</section>
+
+	<section class="section section--bordered">
+		<div class="container--narrow">
+			<div class="download-guide">
+				<div data-reveal>
+					<p class="eyebrow">Field procedure</p>
+					<h2>From archive to action.</h2>
+					<p class="lede">
+						The exact setup differs by platform, but the deployment pattern stays simple.
+					</p>
+				</div>
+				<ol class="rule-list" data-reveal>
+					<li>
+						<span class="rule-list__number">01</span>
+						<span><strong>Own and locate the game data.</strong><br /><span class="muted">Steam is the primary tested source; other retail releases may work.</span></span>
+					</li>
+					<li>
+						<span class="rule-list__number">02</span>
+						<span><strong>Download the matching GeneralsX build.</strong><br /><span class="muted">Zero Hour and the original game ship as separate platform artifacts.</span></span>
+					</li>
+					<li>
+						<span class="rule-list__number">03</span>
+						<span><strong>Follow the platform installation guide.</strong><br /><span class="muted">Flatpak on Linux, app bundles on macOS, and an archive for Windows.</span></span>
+					</li>
+					<li>
+						<span class="rule-list__number">04</span>
+						<span><strong>Deploy and report what you find.</strong><br /><span class="muted">Beta feedback and reproducible issue reports directly improve the engine.</span></span>
+					</li>
+				</ol>
+			</div>
+			<div class="button-row download-guide__actions" data-reveal>
+				<a class="button button--primary" href={site.installation}>
+					Read installation guide <span aria-hidden="true">↗</span>
+				</a>
+				<a class="button" href={site.newIssue}>Report an issue <span aria-hidden="true">↗</span></a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--bordered">
+		<div class="container">
+			<CallToAction
+				eyebrow="No local install"
+				title="Test the browser front."
+				description="Use the community WebAssembly build in a compatible browser. Your legally owned game data still stays under your control."
+				primaryLabel="Open browser demo"
+				primaryHref={site.browserDemo}
+				secondaryLabel="Browse all releases"
+				secondaryHref={site.releases}
+			/>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.notice h2 {
+		margin-bottom: 0.65rem;
+		font-size: clamp(1.8rem, 4vw, 2.7rem);
+	}
+
+	.notice a {
+		color: var(--signal-soft);
+		font-weight: 700;
+	}
+
+	.download-guide {
+		display: grid;
+		grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+		gap: clamp(3rem, 8vw, 8rem);
+	}
+
+	.download-guide h2 {
+		font-size: clamp(3rem, 7vw, 6rem);
+	}
+
+	.download-guide__actions {
+		margin-top: 3rem;
+		justify-content: flex-end;
+	}
+
+	@media (max-width: 50rem) {
+		.download-guide {
+			grid-template-columns: 1fr;
+		}
+
+		.download-guide__actions {
+			justify-content: flex-start;
+		}
+	}
+</style>

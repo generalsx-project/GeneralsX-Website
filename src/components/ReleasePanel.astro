@@ -1,0 +1,264 @@
+---
+import {
+	formatBytes,
+	formatReleaseDate,
+	type Edition,
+	type LatestRelease,
+	type Platform,
+} from '../lib/releases';
+
+interface Props {
+	release: LatestRelease;
+	compact?: boolean;
+}
+
+const { release, compact = false } = Astro.props;
+const editions: Edition[] = ['Zero Hour', 'Generals'];
+const platforms: Platform[] = ['Linux', 'macOS', 'Windows'];
+const platformNotes: Record<Platform, string> = {
+	Linux: 'Flatpak',
+	macOS: 'Apple Silicon',
+	Windows: 'x86',
+};
+---
+
+<div class:list={['release-panel', { 'release-panel--compact': compact }]}>
+	<div class="release-panel__header">
+		<div>
+			<p class="eyebrow">Latest deployment</p>
+			<h2>{release.name}</h2>
+		</div>
+		<div class="release-panel__meta">
+			<span class="signal-dot"></span>
+			<span>{release.tag}</span>
+			<time datetime={release.publishedAt}>{formatReleaseDate(release.publishedAt)}</time>
+		</div>
+	</div>
+
+	<div class="release-panel__editions">
+		{
+			editions.map((edition) => (
+				<section class="release-edition">
+					<div class="release-edition__title">
+						<span>{edition === 'Zero Hour' ? 'Primary theater' : 'Original campaign'}</span>
+						<h3>{edition}</h3>
+					</div>
+					<div class="release-edition__downloads">
+						{platforms.map((platform) => {
+							const asset = release.assets.find(
+								(candidate) =>
+									candidate.edition === edition && candidate.platform === platform,
+							);
+
+							if (!asset) {
+								throw new Error(`Missing ${platform} ${edition} download after validation.`);
+							}
+
+							return (
+								<a href={asset.url}>
+									<span>
+										<strong>{platform}</strong>
+										<small>
+											{platformNotes[platform]} · {formatBytes(asset.size)}
+										</small>
+									</span>
+									<span class="release-edition__arrow" aria-hidden="true">
+										↓
+									</span>
+								</a>
+							);
+						})}
+					</div>
+				</section>
+			))
+		}
+	</div>
+
+	<div class="release-panel__footer">
+		<span>Original game data required</span>
+		<a href={release.url}>Release notes <span aria-hidden="true">↗</span></a>
+	</div>
+</div>
+
+<style>
+	.release-panel {
+		border: 1px solid var(--line-bright);
+		border-radius: var(--radius-md);
+		background:
+			linear-gradient(145deg, rgb(255 255 255 / 4%), transparent 35%),
+			var(--surface-solid);
+		box-shadow: var(--shadow);
+		overflow: hidden;
+	}
+
+	.release-panel__header {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 2rem;
+		padding: clamp(1.5rem, 4vw, 3rem);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.release-panel__header .eyebrow {
+		margin-bottom: 1rem;
+	}
+
+	.release-panel__header h2 {
+		margin-bottom: 0;
+		font-size: clamp(2.5rem, 6vw, 5rem);
+	}
+
+	.release-panel__meta {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.35rem 0.7rem;
+		color: var(--sand-400);
+		font-family: var(--font-display);
+		font-size: 0.76rem;
+		letter-spacing: 0.1em;
+		text-align: right;
+		text-transform: uppercase;
+	}
+
+	.release-panel__meta .signal-dot {
+		grid-row: 1;
+		align-self: center;
+	}
+
+	.release-panel__meta time {
+		grid-column: 2;
+	}
+
+	.release-panel__editions {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.release-edition {
+		padding: clamp(1.5rem, 4vw, 3rem);
+	}
+
+	.release-edition + .release-edition {
+		border-left: 1px solid var(--line);
+	}
+
+	.release-edition__title {
+		margin-bottom: 2rem;
+	}
+
+	.release-edition__title > span {
+		color: var(--sand-400);
+		font-family: var(--font-display);
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.release-edition h3 {
+		margin: 0.35rem 0 0;
+		font-size: clamp(2rem, 4vw, 3.2rem);
+	}
+
+	.release-edition__downloads {
+		display: grid;
+	}
+
+	.release-edition__downloads a {
+		display: flex;
+		min-height: 4.25rem;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 0.8rem;
+		border-top: 1px solid var(--line);
+		color: var(--sand-200);
+		text-decoration: none;
+	}
+
+	.release-edition__downloads a:last-child {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.release-edition__downloads a:hover {
+		color: var(--signal-soft);
+	}
+
+	.release-edition__downloads strong,
+	.release-edition__downloads small {
+		display: block;
+	}
+
+	.release-edition__downloads strong {
+		font-family: var(--font-display);
+		font-size: 1.1rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.release-edition__downloads small {
+		margin-top: 0.1rem;
+		color: var(--sand-400);
+		font-size: 0.72rem;
+	}
+
+	.release-edition__arrow {
+		display: grid;
+		width: 2rem;
+		height: 2rem;
+		place-items: center;
+		border: 1px solid var(--line-bright);
+		border-radius: 50%;
+	}
+
+	.release-panel__footer {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem clamp(1.5rem, 4vw, 3rem);
+		border-top: 1px solid var(--line);
+		color: var(--sand-400);
+		font-family: var(--font-display);
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.release-panel__footer a {
+		color: var(--sand-200);
+		text-decoration: none;
+	}
+
+	.release-panel--compact .release-panel__header h2 {
+		font-size: clamp(2.4rem, 5vw, 4rem);
+	}
+
+	@media (max-width: 48rem) {
+		.release-panel__header {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.release-panel__meta {
+			text-align: left;
+		}
+
+		.release-panel__editions {
+			grid-template-columns: 1fr;
+		}
+
+		.release-edition + .release-edition {
+			border-top: 1px solid var(--line);
+			border-left: 0;
+		}
+	}
+
+	@media (max-width: 32rem) {
+		.release-panel__footer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+</style>

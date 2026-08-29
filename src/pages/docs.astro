@@ -1,0 +1,176 @@
+---
+import CallToAction from '../components/CallToAction.astro';
+import { docGroups } from '../data/docs';
+import { site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title="Documentation"
+	description="Find GeneralsX player setup, platform build, troubleshooting, and contribution documentation."
+>
+	<header class="page-hero">
+		<div class="container--narrow">
+			<p class="eyebrow" data-reveal>Intelligence archive</p>
+			<h1 data-reveal>Orders, clearly documented.</h1>
+			<p class="lede" data-reveal>
+				Player setup, contributor builds, and diagnostic references remain versioned beside
+				the engine source—this page gives you the shortest route in.
+			</p>
+		</div>
+	</header>
+
+	<section class="section">
+		<div class="container docs">
+			{
+				docGroups.map((group, groupIndex) => (
+					<section class="docs-group" data-reveal>
+						<div class="docs-group__intro">
+							<p class="eyebrow">{group.eyebrow}</p>
+							<h2>{group.title}</h2>
+							<p>{group.description}</p>
+						</div>
+						<div class="docs-group__links">
+							{group.links.map((link, linkIndex) => (
+								<a href={link.href}>
+									<span class="docs-group__coordinate">
+										{String(groupIndex + 1).padStart(2, '0')}.
+										{String(linkIndex + 1).padStart(2, '0')}
+									</span>
+									<span>
+										<strong>{link.title}</strong>
+										<small>{link.description}</small>
+									</span>
+									<span class="docs-group__arrow" aria-hidden="true">
+										↗
+									</span>
+								</a>
+							))}
+						</div>
+					</section>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="section section--bordered">
+		<div class="container">
+			<CallToAction
+				eyebrow="Missing intelligence?"
+				title="Improve the field manual."
+				description="Documentation changes are code changes. Open an issue, propose a correction, or send a focused pull request."
+				primaryLabel="Contribute on GitHub"
+				primaryHref={site.contributing}
+				secondaryLabel="Start a discussion"
+				secondaryHref={site.discussions}
+			/>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.docs {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.docs-group {
+		display: grid;
+		grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
+		border: 1px solid var(--line);
+		border-radius: var(--radius-md);
+		background: var(--surface);
+		overflow: hidden;
+	}
+
+	.docs-group__intro {
+		padding: clamp(1.5rem, 4vw, 3rem);
+		border-right: 1px solid var(--line);
+	}
+
+	.docs-group__intro h2 {
+		margin-bottom: 1rem;
+		font-size: clamp(2.5rem, 5vw, 4.2rem);
+	}
+
+	.docs-group__intro > p:last-child {
+		margin-bottom: 0;
+		color: var(--sand-400);
+	}
+
+	.docs-group__links {
+		display: grid;
+	}
+
+	.docs-group__links a {
+		display: grid;
+		grid-template-columns: 3.25rem 1fr auto;
+		align-items: center;
+		gap: 1rem;
+		padding: 1.35rem clamp(1.25rem, 3vw, 2rem);
+		color: var(--sand-200);
+		text-decoration: none;
+		transition: background 180ms ease;
+	}
+
+	.docs-group__links a + a {
+		border-top: 1px solid var(--line);
+	}
+
+	.docs-group__links a:hover {
+		background: rgb(255 122 26 / 7%);
+		color: var(--sand-100);
+	}
+
+	.docs-group__coordinate {
+		color: var(--signal-soft);
+		font-family: var(--font-display);
+		font-size: 0.75rem;
+		letter-spacing: 0.08em;
+	}
+
+	.docs-group__links strong,
+	.docs-group__links small {
+		display: block;
+	}
+
+	.docs-group__links strong {
+		font-family: var(--font-display);
+		font-size: 1.35rem;
+		letter-spacing: 0.015em;
+		text-transform: uppercase;
+	}
+
+	.docs-group__links small {
+		margin-top: 0.2rem;
+		color: var(--sand-400);
+		font-size: 0.78rem;
+		line-height: 1.45;
+	}
+
+	.docs-group__arrow {
+		color: var(--sand-400);
+		font-size: 1.25rem;
+	}
+
+	@media (max-width: 50rem) {
+		.docs-group {
+			grid-template-columns: 1fr;
+		}
+
+		.docs-group__intro {
+			border-right: 0;
+			border-bottom: 1px solid var(--line);
+		}
+	}
+
+	@media (max-width: 32rem) {
+		.docs-group__links a {
+			grid-template-columns: 1fr auto;
+		}
+
+		.docs-group__coordinate {
+			display: none;
+		}
+	}
+</style>

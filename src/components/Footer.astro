@@ -1,0 +1,143 @@
+---
+import { pathFor, site } from '../data/site';
+
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="footer">
+	<div class="footer__main">
+		<div>
+			<a class="footer__mark" href={pathFor('/')}>
+				Generals<strong>X</strong>
+			</a>
+			<p>
+				A community-built, cross-platform engine restoration for Command &amp; Conquer:
+				Generals and Zero Hour.
+			</p>
+		</div>
+
+		<div class="footer__links">
+			<div>
+				<h2>Project</h2>
+				<a href={site.repository}>Source code</a>
+				<a href={site.releases}>Releases</a>
+				<a href={site.contributing}>Contributing</a>
+				<a href={site.license}>License</a>
+			</div>
+			<div>
+				<h2>Connect</h2>
+				<a href={site.issues}>Issues</a>
+				<a href={site.discussions}>Discussions</a>
+				<a href={site.sponsor}>Sponsor</a>
+				<a href={site.browserDemo}>Browser demo</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer__legal">
+		<span>© {year} GeneralsX contributors</span>
+		<span>
+			EA has not endorsed and does not support this project. All trademarks belong to their
+			respective owners.
+		</span>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		position: relative;
+		padding: clamp(4rem, 8vw, 7rem) max(1rem, calc((100vw - min(90rem, calc(100vw - 2rem))) / 2));
+		border-top: 1px solid var(--line);
+		background:
+			linear-gradient(130deg, rgb(255 122 26 / 8%), transparent 32%),
+			var(--ink-900);
+	}
+
+	.footer__main {
+		display: grid;
+		grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 1fr);
+		gap: 4rem;
+	}
+
+	.footer__mark {
+		display: inline-block;
+		margin-bottom: 1.4rem;
+		color: var(--sand-100);
+		font-family: var(--font-display);
+		font-size: clamp(2.8rem, 6vw, 5rem);
+		font-weight: 700;
+		letter-spacing: -0.04em;
+		line-height: 0.9;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	.footer__mark strong {
+		color: var(--cyan);
+		font-style: italic;
+	}
+
+	.footer p {
+		max-width: 34rem;
+		color: var(--sand-400);
+	}
+
+	.footer__links {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2rem;
+	}
+
+	.footer__links div {
+		display: grid;
+		align-content: start;
+		gap: 0.65rem;
+	}
+
+	.footer__links h2 {
+		margin-bottom: 0.55rem;
+		color: var(--sand-400);
+		font-family: var(--font-body);
+		font-size: 0.72rem;
+		letter-spacing: 0.14em;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	.footer__links a {
+		color: var(--sand-200);
+		text-decoration: none;
+	}
+
+	.footer__legal {
+		display: flex;
+		justify-content: space-between;
+		gap: 2rem;
+		margin-top: 5rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--line);
+		color: var(--sand-400);
+		font-size: 0.72rem;
+		line-height: 1.5;
+	}
+
+	.footer__legal span:last-child {
+		max-width: 42rem;
+		text-align: right;
+	}
+
+	@media (max-width: 48rem) {
+		.footer__main {
+			grid-template-columns: 1fr;
+		}
+
+		.footer__legal {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.footer__legal span:last-child {
+			text-align: left;
+		}
+	}
+</style>

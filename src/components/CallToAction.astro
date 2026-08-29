@@ -1,0 +1,97 @@
+---
+interface Props {
+	eyebrow: string;
+	title: string;
+	description: string;
+	primaryLabel: string;
+	primaryHref: string;
+	secondaryLabel?: string;
+	secondaryHref?: string;
+}
+
+const {
+	eyebrow,
+	title,
+	description,
+	primaryLabel,
+	primaryHref,
+	secondaryLabel,
+	secondaryHref,
+} = Astro.props;
+---
+
+<section class="cta" data-reveal>
+	<div class="cta__scanner" aria-hidden="true"></div>
+	<div>
+		<p class="eyebrow">{eyebrow}</p>
+		<h2>{title}</h2>
+		<p>{description}</p>
+	</div>
+	<div class="button-row">
+		<a class="button button--primary" href={primaryHref}>
+			{primaryLabel} <span class="button__arrow" aria-hidden="true">→</span>
+		</a>
+		{
+			secondaryLabel && secondaryHref && (
+				<a class="button" href={secondaryHref}>
+					{secondaryLabel} <span aria-hidden="true">↗</span>
+				</a>
+			)
+		}
+	</div>
+</section>
+
+<style>
+	.cta {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: end;
+		gap: 3rem;
+		padding: clamp(2rem, 6vw, 5rem);
+		border: 1px solid rgb(255 122 26 / 35%);
+		border-radius: var(--radius-md);
+		background:
+			linear-gradient(120deg, rgb(255 122 26 / 14%), transparent 38%),
+			var(--surface-solid);
+		overflow: hidden;
+	}
+
+	.cta__scanner {
+		position: absolute;
+		top: -15rem;
+		right: -12rem;
+		width: 32rem;
+		height: 32rem;
+		border: 1px solid rgb(255 122 26 / 25%);
+		border-radius: 50%;
+		box-shadow:
+			0 0 0 4rem rgb(255 122 26 / 3%),
+			0 0 0 8rem rgb(255 122 26 / 2%);
+	}
+
+	.cta > div:not(.cta__scanner) {
+		position: relative;
+		z-index: 1;
+	}
+
+	.cta h2 {
+		max-width: 11ch;
+		margin-bottom: 1.25rem;
+		font-size: clamp(3rem, 7vw, 6rem);
+	}
+
+	.cta p:not(.eyebrow) {
+		max-width: 43rem;
+		margin-bottom: 0;
+		color: var(--sand-200);
+		font-size: 1.08rem;
+	}
+
+	@media (max-width: 58rem) {
+		.cta {
+			grid-template-columns: 1fr;
+			align-items: start;
+		}
+	}
+</style>

@@ -1,0 +1,326 @@
+---
+import CallToAction from '../components/CallToAction.astro';
+import { site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title="Community"
+	description="Learn how GeneralsX is built, meet its upstream community, and find a way to contribute."
+>
+	<header class="page-hero">
+		<div class="container--narrow">
+			<p class="eyebrow" data-reveal>Open comms</p>
+			<h1 data-reveal>Maintained by people who still care.</h1>
+			<p class="lede" data-reveal>
+				GeneralsX turns decades of preservation and portability work into releases that
+				players can use now—and every contribution strengthens that chain.
+			</p>
+		</div>
+	</header>
+
+	<section class="section">
+		<div class="container community-grid">
+			<div data-reveal>
+				<p class="eyebrow">The mission</p>
+				<h2>Preserve behavior. Expand access.</h2>
+			</div>
+			<div class="community-grid__copy" data-reveal>
+				<p class="lede">
+					The objective is not to redesign Generals. It is to preserve the retail strategy
+					experience while making the platform beneath it portable, reproducible, and
+					maintainable.
+				</p>
+				<p>
+					The “X” stands for cross-platform—and nods to the Mega Man X series. Today the
+					project delivers Generals and Zero Hour builds for Linux, macOS, and Windows while
+					keeping future platforms within reach.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--bordered">
+		<div class="container">
+			<div class="lineage" data-reveal>
+				<div class="lineage__intro">
+					<p class="eyebrow">Shared lineage</p>
+					<h2>No preservation project stands alone.</h2>
+					<p>
+						GeneralsX integrates foundational work from across the Command &amp; Conquer
+						community and keeps that lineage visible.
+					</p>
+				</div>
+				<div class="lineage__nodes">
+					<article>
+						<span>Upstream stability</span>
+						<h3>TheSuperHackers</h3>
+						<p>Retail compatibility, fixes, maintenance, and the primary game-code foundation.</p>
+						<a href="https://github.com/TheSuperHackers/GeneralsGameCode">View upstream ↗</a>
+					</article>
+					<article>
+						<span>Portability groundwork</span>
+						<h3>Fighter19 + feliwir</h3>
+						<p>SDL3, DXVK, OpenAL, FFmpeg, filesystem modernization, and Linux-focused reference work.</p>
+						<a href="https://github.com/Fighter19/CnC_Generals_Zero_Hour">View project ↗</a>
+					</article>
+					<article>
+						<span>Integration + delivery</span>
+						<h3>GeneralsX contributors</h3>
+						<p>Cross-platform adaptation, deterministic builds, packaging, testing, and active releases.</p>
+						<a href={`${site.repository}/graphs/contributors`}>Meet contributors ↗</a>
+					</article>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--bordered">
+		<div class="container">
+			<div class="contribute">
+				<div data-reveal>
+					<p class="eyebrow">Choose a vector</p>
+					<h2>Contribution takes more than code.</h2>
+				</div>
+				<div class="contribute__grid">
+					<a href={site.issues} data-reveal>
+						<span>01 / Test</span>
+						<strong>Reproduce a bug</strong>
+						<small>Platform details, logs, and exact steps turn a report into a fix.</small>
+						<i aria-hidden="true">↗</i>
+					</a>
+					<a href={site.contributing} data-reveal>
+						<span>02 / Build</span>
+						<strong>Change the engine</strong>
+						<small>Study the conventions, choose a focused issue, and send a polished pull request.</small>
+						<i aria-hidden="true">↗</i>
+					</a>
+					<a href={site.discussions} data-reveal>
+						<span>03 / Share</span>
+						<strong>Join the discussion</strong>
+						<small>Compare setups, propose direction, or help another commander deploy.</small>
+						<i aria-hidden="true">↗</i>
+					</a>
+					<a href={site.sponsor} data-reveal>
+						<span>04 / Sustain</span>
+						<strong>Fund the work</strong>
+						<small>Support integration, testing infrastructure, packaging, and documentation.</small>
+						<i aria-hidden="true">↗</i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--bordered">
+		<div class="container">
+			<CallToAction
+				eyebrow="Your move"
+				title="Help carry the battlefield forward."
+				description="Start with an issue, a discussion, or the source. Small, verified contributions compound into a game that keeps running."
+				primaryLabel="Explore open issues"
+				primaryHref={site.issues}
+				secondaryLabel="Sponsor GeneralsX"
+				secondaryHref={site.sponsor}
+			/>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.community-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+		gap: clamp(3rem, 8vw, 9rem);
+	}
+
+	.community-grid h2 {
+		max-width: 10ch;
+	}
+
+	.community-grid__copy {
+		align-self: end;
+	}
+
+	.community-grid__copy p:not(.lede) {
+		color: var(--sand-400);
+	}
+
+	.lineage {
+		display: grid;
+		grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
+		border: 1px solid var(--line);
+		background: var(--surface-solid);
+	}
+
+	.lineage__intro {
+		padding: clamp(1.5rem, 4vw, 3rem);
+		border-right: 1px solid var(--line);
+	}
+
+	.lineage__intro h2 {
+		margin-bottom: 1.2rem;
+		font-size: clamp(3rem, 6vw, 5rem);
+	}
+
+	.lineage__intro > p:last-child {
+		color: var(--sand-400);
+	}
+
+	.lineage__nodes article {
+		position: relative;
+		padding: clamp(1.5rem, 4vw, 2.5rem);
+	}
+
+	.lineage__nodes article + article {
+		border-top: 1px solid var(--line);
+	}
+
+	.lineage__nodes article::before {
+		position: absolute;
+		top: 2.4rem;
+		left: -0.32rem;
+		width: 0.65rem;
+		height: 0.65rem;
+		border: 1px solid var(--signal);
+		border-radius: 50%;
+		background: var(--ink-950);
+		content: '';
+	}
+
+	.lineage__nodes article > span {
+		color: var(--signal-soft);
+		font-family: var(--font-display);
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.lineage__nodes h3 {
+		margin: 0.4rem 0 0.7rem;
+	}
+
+	.lineage__nodes p {
+		max-width: 42rem;
+		color: var(--sand-400);
+	}
+
+	.lineage__nodes a {
+		color: var(--sand-200);
+		font-size: 0.82rem;
+		font-weight: 700;
+	}
+
+	.contribute > div:first-child {
+		display: grid;
+		grid-template-columns: 0.6fr 1fr;
+		align-items: end;
+		gap: 2rem;
+		margin-bottom: clamp(2.5rem, 6vw, 5rem);
+	}
+
+	.contribute h2 {
+		max-width: 12ch;
+		margin-bottom: 0;
+	}
+
+	.contribute__grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.contribute__grid a {
+		position: relative;
+		display: grid;
+		min-height: 18rem;
+		align-content: end;
+		padding: clamp(1.5rem, 4vw, 2.5rem);
+		border: 1px solid var(--line);
+		color: var(--sand-100);
+		text-decoration: none;
+		transition:
+			background 180ms ease,
+			border-color 180ms ease;
+	}
+
+	.contribute__grid a:nth-child(even) {
+		border-left: 0;
+	}
+
+	.contribute__grid a:nth-child(n + 3) {
+		border-top: 0;
+	}
+
+	.contribute__grid a:hover {
+		border-color: rgb(255 122 26 / 55%);
+		background: rgb(255 122 26 / 7%);
+	}
+
+	.contribute__grid span {
+		position: absolute;
+		top: 1.5rem;
+		left: 1.5rem;
+		color: var(--signal-soft);
+		font-family: var(--font-display);
+		font-size: 0.72rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.contribute__grid strong {
+		font-family: var(--font-display);
+		font-size: clamp(1.8rem, 4vw, 3rem);
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	.contribute__grid small {
+		max-width: 34rem;
+		margin-top: 0.8rem;
+		color: var(--sand-400);
+		font-size: 0.82rem;
+		line-height: 1.5;
+	}
+
+	.contribute__grid i {
+		position: absolute;
+		top: 1.5rem;
+		right: 1.5rem;
+		font-style: normal;
+	}
+
+	@media (max-width: 55rem) {
+		.community-grid,
+		.lineage {
+			grid-template-columns: 1fr;
+		}
+
+		.lineage__intro {
+			border-right: 0;
+			border-bottom: 1px solid var(--line);
+		}
+
+		.lineage__nodes article::before {
+			display: none;
+		}
+
+		.contribute > div:first-child {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 38rem) {
+		.contribute__grid {
+			grid-template-columns: 1fr;
+		}
+
+		.contribute__grid a:nth-child(even) {
+			border-left: 1px solid var(--line);
+		}
+
+		.contribute__grid a:nth-child(n + 2) {
+			border-top: 0;
+		}
+	}
+</style>

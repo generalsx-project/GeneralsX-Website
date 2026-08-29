@@ -1,0 +1,232 @@
+---
+import { Picture } from 'astro:assets';
+import splash from '../assets/brand/generalsx-splash.png';
+import { pathFor, site } from '../data/site';
+import type { LatestRelease } from '../lib/releases';
+
+interface Props {
+	release: LatestRelease;
+}
+
+const { release } = Astro.props;
+---
+
+<section class="hero">
+	<div class="hero__art" data-depth aria-hidden="true">
+		<Picture
+			src={splash}
+			formats={['avif']}
+			fallbackFormat="webp"
+			widths={[640, 960, 1280, 1536]}
+			sizes="100vw"
+			alt=""
+			loading="eager"
+			fetchpriority="high"
+		/>
+	</div>
+	<div class="hero__scrim" aria-hidden="true"></div>
+	<div class="hero__radar" aria-hidden="true"></div>
+
+	<div class="hero__content">
+		<div class="hero__status" data-reveal>
+			<span class="signal-dot"></span>
+			<span>Operation ready</span>
+			<span class="hero__status-separator">/</span>
+			<a href={release.url}>{release.tag}</a>
+		</div>
+
+		<div class="hero__copy">
+			<p class="eyebrow" data-reveal>Open-source engine restoration</p>
+			<h1 data-reveal>Classic command.<br /><span>Modern ground.</span></h1>
+			<p class="hero__lede" data-reveal>
+				Generals and Zero Hour, rebuilt to deploy across Linux, macOS, and Windows from one
+				deterministic codebase.
+			</p>
+			<div class="button-row" data-reveal>
+				<a class="button button--primary" href={pathFor('/downloads')}>
+					Deploy now <span class="button__arrow" aria-hidden="true">→</span>
+				</a>
+				<a class="button" href={site.browserDemo} target="_blank" rel="noreferrer">
+					Play in browser <span aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</div>
+
+		<div class="hero__coordinates micro" aria-hidden="true">
+			<span>34.05 N</span>
+			<span>118.24 W</span>
+			<span>GX / 2026</span>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		display: grid;
+		min-height: max(47rem, 100svh);
+		align-items: end;
+		overflow: hidden;
+		border-bottom: 1px solid var(--line);
+		background: var(--ink-900);
+	}
+
+	.hero__art,
+	.hero__scrim,
+	.hero__radar {
+		position: absolute;
+		inset: 0;
+	}
+
+	.hero__art {
+		transform: translate3d(
+			calc(var(--pointer-x, 0) * -0.8rem),
+			calc(var(--pointer-y, 0) * -0.8rem),
+			0
+		);
+		transition: transform 700ms var(--ease-out);
+	}
+
+	.hero__art :global(picture),
+	.hero__art :global(img) {
+		width: 100%;
+		height: 100%;
+	}
+
+	.hero__art :global(img) {
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.hero__scrim {
+		background:
+			linear-gradient(90deg, rgb(5 8 6 / 94%) 0%, rgb(5 8 6 / 65%) 44%, rgb(5 8 6 / 22%) 75%),
+			linear-gradient(0deg, var(--ink-950) 0%, transparent 34%, rgb(5 8 6 / 15%) 80%),
+			linear-gradient(180deg, rgb(5 8 6 / 58%), transparent 24%);
+	}
+
+	.hero__radar {
+		right: -15rem;
+		bottom: -31rem;
+		left: auto;
+		width: 60rem;
+		height: 60rem;
+		border: 1px solid rgb(255 122 26 / 20%);
+		border-radius: 50%;
+		background:
+			linear-gradient(90deg, transparent 49.9%, rgb(255 122 26 / 20%) 50%, transparent 50.1%),
+			linear-gradient(transparent 49.9%, rgb(255 122 26 / 20%) 50%, transparent 50.1%);
+		box-shadow:
+			0 0 0 6rem rgb(255 122 26 / 2%),
+			0 0 0 12rem rgb(255 122 26 / 1.5%);
+		opacity: 0.8;
+	}
+
+	.hero__content {
+		position: relative;
+		z-index: 2;
+		width: var(--content);
+		height: 100%;
+		margin-inline: auto;
+		padding-top: calc(var(--header-height) + 2rem);
+		padding-bottom: clamp(2rem, 5vw, 4rem);
+	}
+
+	.hero__status {
+		position: absolute;
+		top: calc(var(--header-height) + 1.5rem);
+		left: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		color: var(--sand-200);
+		font-family: var(--font-display);
+		font-size: 0.74rem;
+		font-weight: 600;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	.hero__status a {
+		color: var(--sand-100);
+		text-decoration: none;
+	}
+
+	.hero__status-separator {
+		color: var(--sand-400);
+	}
+
+	.hero__copy {
+		max-width: 67rem;
+		margin-top: auto;
+		padding-top: clamp(12rem, 22vh, 16rem);
+	}
+
+	.hero h1 {
+		margin-bottom: 1.5rem;
+		font-size: clamp(4.5rem, 11vw, 8.5rem);
+		text-shadow: 0 0.12em 0.5em rgb(0 0 0 / 30%);
+	}
+
+	.hero h1 span {
+		color: transparent;
+		-webkit-text-stroke: 1px rgb(241 234 215 / 64%);
+	}
+
+	.hero__lede {
+		max-width: 43rem;
+		margin-bottom: 2rem;
+		color: var(--sand-200);
+		font-size: clamp(1.08rem, 2vw, 1.42rem);
+		line-height: 1.55;
+	}
+
+	.hero__coordinates {
+		position: absolute;
+		right: 0;
+		bottom: 4rem;
+		display: grid;
+		gap: 0.35rem;
+		color: rgb(217 206 180 / 55%);
+		text-align: right;
+	}
+
+	@media (max-width: 58rem) {
+		.hero__art :global(img) {
+			object-position: 62% center;
+		}
+
+		.hero__scrim {
+			background:
+				linear-gradient(90deg, rgb(5 8 6 / 92%) 0%, rgb(5 8 6 / 58%) 75%, rgb(5 8 6 / 35%)),
+				linear-gradient(0deg, var(--ink-950) 0%, transparent 42%);
+		}
+
+		.hero__coordinates {
+			display: none;
+		}
+	}
+
+	@media (max-width: 36rem) {
+		.hero {
+			min-height: 46rem;
+		}
+
+		.hero__art :global(img) {
+			object-position: 67% center;
+		}
+
+		.hero__copy {
+			padding-top: 11rem;
+		}
+
+		.hero h1 {
+			font-size: clamp(3.5rem, 18vw, 4.6rem);
+		}
+
+		.hero__status {
+			max-width: 100%;
+			flex-wrap: wrap;
+		}
+	}
+</style>

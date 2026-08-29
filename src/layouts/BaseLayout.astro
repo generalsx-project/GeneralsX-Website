@@ -1,0 +1,78 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource/barlow-condensed/600.css';
+import '@fontsource/barlow-condensed/700.css';
+import '../styles/global.css';
+import '../styles/motion.css';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { pathFor, site } from '../data/site';
+
+interface Props {
+	title?: string;
+	description?: string;
+	theme?: 'dark' | 'sand';
+	noindex?: boolean;
+}
+
+const {
+	title = site.name,
+	description = site.description,
+	theme = 'dark',
+	noindex = false,
+} = Astro.props;
+const pageTitle = title === site.name ? `${site.name} — Cross-platform command` : `${title} — ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const openGraphImage = new URL(pathFor('/og-image.jpg'), Astro.site);
+const structuredData = JSON.stringify({
+	'@context': 'https://schema.org',
+	'@type': 'SoftwareApplication',
+	name: site.name,
+	description: site.description,
+	applicationCategory: 'GameApplication',
+	operatingSystem: 'Linux, macOS, Windows',
+	codeRepository: site.repository,
+	license: site.license,
+	url: canonical.toString(),
+}).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="en" data-theme={theme}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
+		<meta name="theme-color" content="#07100d" />
+		<meta name="color-scheme" content="dark" />
+		<link rel="icon" type="image/svg+xml" href={pathFor('/favicon.svg')} />
+		<link rel="canonical" href={canonical} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={site.name} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={openGraphImage} />
+		<meta property="og:image:alt" content="GeneralsX tactical deployment artwork" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={openGraphImage} />
+		<script is:inline type="application/ld+json" set:html={structuredData} />
+		<title>{pageTitle}</title>
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">Skip to main content</a>
+		<div class="site-grid" aria-hidden="true"></div>
+		<Header />
+		<main id="main-content">
+			<slot />
+		</main>
+		<Footer />
+		<script>
+			import '../scripts/motion';
+		</script>
+	</body>
+</html>

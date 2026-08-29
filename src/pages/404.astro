@@ -1,0 +1,70 @@
+---
+import { pathFor, site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title="Signal lost"
+	description="The requested GeneralsX page could not be found."
+	noindex
+>
+	<section class="lost">
+		<div class="lost__radar" aria-hidden="true"></div>
+		<div class="container--narrow lost__content">
+			<p class="eyebrow">Error / 404</p>
+			<h1>Signal lost.</h1>
+			<p class="lede">
+				The requested coordinates are outside the operation area. Return to command or report
+				a broken route.
+			</p>
+			<div class="button-row">
+				<a class="button button--primary" href={pathFor('/')}>
+					Return to command <span class="button__arrow" aria-hidden="true">→</span>
+				</a>
+				<a class="button" href={site.issues}>Report broken link <span aria-hidden="true">↗</span></a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.lost {
+		position: relative;
+		display: grid;
+		min-height: 100svh;
+		place-items: center;
+		padding-block: calc(var(--header-height) + 4rem) 4rem;
+		overflow: hidden;
+		background:
+			radial-gradient(circle at 75% 45%, rgb(255 122 26 / 13%), transparent 22rem),
+			var(--ink-950);
+	}
+
+	.lost__content {
+		position: relative;
+		z-index: 1;
+	}
+
+	.lost h1 {
+		margin-bottom: 1.5rem;
+	}
+
+	.lost .lede {
+		margin-bottom: 2rem;
+	}
+
+	.lost__radar {
+		position: absolute;
+		right: -10rem;
+		width: min(70vw, 55rem);
+		aspect-ratio: 1;
+		border: 1px solid rgb(255 122 26 / 18%);
+		border-radius: 50%;
+		background:
+			linear-gradient(90deg, transparent 49.9%, rgb(255 122 26 / 20%) 50%, transparent 50.1%),
+			linear-gradient(transparent 49.9%, rgb(255 122 26 / 20%) 50%, transparent 50.1%);
+		box-shadow:
+			0 0 0 7rem rgb(255 122 26 / 2%),
+			0 0 0 14rem rgb(255 122 26 / 1.5%);
+	}
+</style>

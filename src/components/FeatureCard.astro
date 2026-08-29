@@ -1,0 +1,75 @@
+---
+interface Props {
+	number: string;
+	title: string;
+	description: string;
+	meta: string;
+}
+
+const { number, title, description, meta } = Astro.props;
+---
+
+<article class="feature-card" data-reveal>
+	<div class="feature-card__top">
+		<span>{number}</span>
+		<span>{meta}</span>
+	</div>
+	<h3>{title}</h3>
+	<p>{description}</p>
+</article>
+
+<style>
+	.feature-card {
+		position: relative;
+		min-height: 23rem;
+		padding: clamp(1.5rem, 3vw, 2.25rem);
+		border: 1px solid var(--line);
+		background:
+			linear-gradient(145deg, rgb(255 255 255 / 4%), transparent 45%),
+			rgb(7 16 13 / 78%);
+		overflow: hidden;
+	}
+
+	.feature-card::after {
+		position: absolute;
+		right: -3rem;
+		bottom: -3rem;
+		width: 9rem;
+		height: 9rem;
+		border: 1px solid var(--line-bright);
+		border-radius: 50%;
+		box-shadow:
+			0 0 0 1.5rem rgb(255 255 255 / 1.5%),
+			0 0 0 3rem rgb(255 255 255 / 1%);
+		content: '';
+	}
+
+	.feature-card__top {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 7rem;
+		color: var(--sand-400);
+		font-family: var(--font-display);
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+	}
+
+	.feature-card__top span:first-child {
+		color: var(--signal-soft);
+	}
+
+	.feature-card h3 {
+		max-width: 10ch;
+		margin-bottom: 1rem;
+	}
+
+	.feature-card p {
+		position: relative;
+		z-index: 1;
+		max-width: 32rem;
+		margin-bottom: 0;
+		color: var(--sand-400);
+	}
+</style>
