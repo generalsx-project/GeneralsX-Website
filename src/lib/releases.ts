@@ -27,12 +27,12 @@ interface AssetRule {
 }
 
 const assetRules: AssetRule[] = [
-	{ pattern: /^GeneralsX-linux\.flatpak$/i, platform: 'Linux', edition: 'Generals' },
-	{ pattern: /^GeneralsXZH-linux\.flatpak$/i, platform: 'Linux', edition: 'Zero Hour' },
-	{ pattern: /^macos-generalsx-app\.tar\.zip$/i, platform: 'macOS', edition: 'Generals' },
-	{ pattern: /^macos-generalsxzh-app\.tar\.zip$/i, platform: 'macOS', edition: 'Zero Hour' },
-	{ pattern: /^generalsx-windows-x86\.zip$/i, platform: 'Windows', edition: 'Generals' },
-	{ pattern: /^generalsxzh-windows-x86\.zip$/i, platform: 'Windows', edition: 'Zero Hour' },
+	{ pattern: /^(?:GeneralsX-linux|Linux-GeneralsX)\.flatpak$/i, platform: 'Linux', edition: 'Generals' },
+	{ pattern: /^(?:GeneralsXZH-linux|Linux-GeneralsXZH)\.flatpak$/i, platform: 'Linux', edition: 'Zero Hour' },
+	{ pattern: /^(?:macos-generalsx-app|macOS-GeneralsX)\.tar\.zip$/i, platform: 'macOS', edition: 'Generals' },
+	{ pattern: /^(?:macos-generalsxzh-app|macOS-GeneralsXZH)\.tar\.zip$/i, platform: 'macOS', edition: 'Zero Hour' },
+	{ pattern: /^(?:generalsx-windows-x86|Windows-GeneralsX)\.zip$/i, platform: 'Windows', edition: 'Generals' },
+	{ pattern: /^(?:generalsxzh-windows-x86|Windows-GeneralsXZH)\.zip$/i, platform: 'Windows', edition: 'Zero Hour' },
 ];
 
 function asRecord(value: unknown, label: string): Record<string, unknown> {

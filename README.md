@@ -4,7 +4,7 @@ The standalone public website for [GeneralsX](https://github.com/fbraz3/Generals
 
 The site is built with Astro and TypeScript, reads the latest public release metadata from GitHub at build time, and deploys as a static GitHub Pages project.
 
-**Production:** <https://www.amirrazmjou.com/GeneralsX-Website/>
+**Production:** <https://generalsx.org/>
 
 ## Development
 
@@ -20,7 +20,7 @@ npm ci
 npm run dev
 ```
 
-The project is configured for `arazmj/GeneralsX-Website`, so local URLs include `/GeneralsX-Website/`.
+The production repository serves from `/` at `generalsx.org`. Forks default to their GitHub Pages project path.
 
 Run the strict project checks and production build:
 
@@ -42,8 +42,8 @@ Astro derives its production owner and repository name from `GITHUB_REPOSITORY`.
 | Variable | Purpose | Default |
 |---|---|---|
 | `GITHUB_REPOSITORY` | GitHub `owner/repository` identity | `arazmj/GeneralsX-Website` |
-| `PUBLIC_SITE_URL` | Pages origin or custom domain | `https://www.amirrazmjou.com` for this repository |
-| `PUBLIC_BASE_PATH` | Project path, or `/` for a root/custom domain | `/<repository>` |
+| `PUBLIC_SITE_URL` | Pages origin or custom domain | `https://generalsx.org` for this repository |
+| `PUBLIC_BASE_PATH` | Project path, or `/` for a root/custom domain | `/` for this repository |
 | `GITHUB_TOKEN` | Raises GitHub API limits during the build | Unauthenticated public API |
 
 The build requests `fbraz3/GeneralsX`'s latest release and validates all six expected Linux, macOS, and Windows artifacts. It fails explicitly if the request or filename mapping changes so a deployment cannot silently publish incorrect download links.
@@ -55,6 +55,8 @@ The build requests `fbraz3/GeneralsX`'s latest release and validates all six exp
 3. Run the `Deploy website` workflow or push to `main`.
 
 `.github/workflows/verify.yml` checks pull requests. `.github/workflows/deploy-pages.yml` checks, builds, and deploys pushes to `main`; a scheduled build refreshes upstream release data daily.
+
+The production repository publishes `public/CNAME` for `generalsx.org`. The domain's DNS must point its apex to GitHub Pages before HTTPS can be enforced.
 
 If the repository is transferred or renamed, `astro.config.mjs`, canonical metadata, the sitemap, and `robots.txt` adapt automatically in GitHub Actions.
 
