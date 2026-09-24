@@ -2,9 +2,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-const repository = process.env.GITHUB_REPOSITORY ?? 'arazmj/GeneralsX-Website';
+const repository = process.env.GITHUB_REPOSITORY ?? 'generalsx-project/GeneralsX-Website';
 const [owner, repositoryName] = repository.split('/');
-const isProductionWebsite = repository === 'arazmj/GeneralsX-Website';
+const isProductionWebsite = repository === 'generalsx-project/GeneralsX-Website';
 
 if (!owner || !repositoryName) {
 	throw new Error(`GITHUB_REPOSITORY must use the "owner/repository" format. Received: ${repository}`);

@@ -41,6 +41,9 @@ jobs:
       - name: Check Astro project
         run: npm run check
 
+      - name: Test release mapping and site configuration
+        run: npm test
+
       - name: Build static site
         run: npm run build
         env:

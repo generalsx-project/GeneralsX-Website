@@ -26,6 +26,7 @@ Run the strict project checks and production build:
 
 ```sh
 npm run check
+npm test
 npm run build
 ```
 
@@ -41,12 +42,12 @@ Astro derives its production owner and repository name from `GITHUB_REPOSITORY`.
 
 | Variable | Purpose | Default |
 |---|---|---|
-| `GITHUB_REPOSITORY` | GitHub `owner/repository` identity | `arazmj/GeneralsX-Website` |
+| `GITHUB_REPOSITORY` | GitHub `owner/repository` identity | `generalsx-project/GeneralsX-Website` |
 | `PUBLIC_SITE_URL` | Pages origin or custom domain | `https://generalsx.org` for this repository |
 | `PUBLIC_BASE_PATH` | Project path, or `/` for a root/custom domain | `/` for this repository |
 | `GITHUB_TOKEN` | Raises GitHub API limits during the build | Unauthenticated public API |
 
-The build requests `fbraz3/GeneralsX`'s latest release and validates all six expected Linux, macOS, and Windows artifacts. It fails explicitly if the request or filename mapping changes so a deployment cannot silently publish incorrect download links.
+The build requests `fbraz3/GeneralsX`'s latest release and validates all six expected Linux, macOS, and Windows artifacts. macOS downloads support the current `.zip` packages and legacy `.tar.zip` packages. It fails explicitly if the request or filename mapping changes so a deployment cannot silently publish incorrect download links.
 
 ## Deployment
 
@@ -58,7 +59,7 @@ The build requests `fbraz3/GeneralsX`'s latest release and validates all six exp
 
 The production repository publishes `public/CNAME` for `generalsx.org`. The domain's DNS must point its apex to GitHub Pages before HTTPS can be enforced.
 
-If the repository is transferred or renamed, `astro.config.mjs`, canonical metadata, the sitemap, and `robots.txt` adapt automatically in GitHub Actions.
+The custom-domain identity in `astro.config.mjs` is `generalsx-project/GeneralsX-Website`. Update that identity if the production repository is transferred or renamed again, or set `PUBLIC_SITE_URL=https://generalsx.org` and `PUBLIC_BASE_PATH=/` explicitly. Other repositories default to their GitHub Pages project URL; canonical metadata, the sitemap, and `robots.txt` use the resulting configuration.
 
 ## Media policy
 
