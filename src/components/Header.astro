@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import emblem from '../assets/brand/generalsx-emblem.png';
 import { navigation, pathFor, site } from '../data/site';
 
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
@@ -8,7 +10,8 @@ const isCurrent = (href: string) => (href.replace(/\/+$/, '') || '/') === curren
 <header class="header" data-header>
 	<div class="header__inner">
 		<a class="wordmark" href={pathFor('/')} aria-label="GeneralsX home">
-			<span>Generals</span><strong>X</strong>
+			<Image class="wordmark__emblem" src={emblem} alt="" width={34} height={34} />
+			<span class="wordmark__text">Generals<strong>X</strong></span>
 		</a>
 
 		<button
@@ -78,7 +81,7 @@ const isCurrent = (href: string) => (href.replace(/\/+$/, '') || '/') === curren
 		left: 0;
 		height: var(--header-height);
 		border-bottom: 1px solid var(--line);
-		background: rgb(5 8 6 / 72%);
+		background: rgb(7 9 14 / 78%);
 		backdrop-filter: blur(1rem) saturate(130%);
 	}
 
@@ -93,7 +96,8 @@ const isCurrent = (href: string) => (href.replace(/\/+$/, '') || '/') === curren
 
 	.wordmark {
 		display: inline-flex;
-		align-items: baseline;
+		align-items: center;
+		gap: 0.55rem;
 		color: var(--sand-100);
 		font-family: var(--font-display);
 		font-size: 1.35rem;
@@ -104,12 +108,19 @@ const isCurrent = (href: string) => (href.replace(/\/+$/, '') || '/') === curren
 		text-transform: uppercase;
 	}
 
+	.wordmark__emblem {
+		width: 2.1rem;
+		height: 2.1rem;
+		border-radius: 0.35rem;
+		border: 1px solid rgb(255 170 0 / 32%);
+	}
+
 	.wordmark strong {
-		margin-left: 0.08em;
-		color: var(--cyan);
+		margin-left: 0.02em;
+		color: var(--signal);
 		font-size: 1.4em;
 		font-style: italic;
-		text-shadow: 0 0 1.3rem rgb(88 212 255 / 65%);
+		text-shadow: 0 0 1.3rem rgb(255 170 0 / 55%);
 	}
 
 	.nav {
@@ -224,7 +235,7 @@ const isCurrent = (href: string) => (href.replace(/\/+$/, '') || '/') === curren
 			height: auto;
 			padding: 0.75rem;
 			border-bottom: 1px solid var(--line);
-			background: rgb(5 8 6 / 97%);
+			background: rgb(7 9 14 / 97%);
 			opacity: 0;
 			pointer-events: none;
 			transform: translateY(-0.75rem);

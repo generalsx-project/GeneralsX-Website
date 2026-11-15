@@ -1,21 +1,21 @@
 :root {
-	--ink-950: #050806;
-	--ink-900: #07100d;
-	--ink-850: #0a1511;
-	--ink-800: #0d1c17;
-	--ink-700: #152a22;
-	--olive-500: #53664d;
-	--olive-300: #8b9a72;
-	--sand-100: #f1ead7;
-	--sand-200: #d9ceb4;
-	--sand-400: #9d9279;
-	--signal: #ff7a1a;
-	--signal-soft: #ffab5c;
-	--cyan: #58d4ff;
-	--line: rgb(217 206 180 / 15%);
-	--line-bright: rgb(217 206 180 / 32%);
-	--surface: rgb(10 21 17 / 82%);
-	--surface-solid: #0b1713;
+	--ink-950: #07090e;
+	--ink-900: #0b0f17;
+	--ink-850: #0d111a;
+	--ink-800: #131a26;
+	--ink-700: #1b2436;
+	--olive-500: #475569;
+	--olive-300: #94a3b8;
+	--sand-100: #f0f4f8;
+	--sand-200: #cbd5e1;
+	--sand-400: #8b9bb4;
+	--signal: #ffaa00;
+	--signal-soft: #ffbb33;
+	--cyan: #00d4ff;
+	--line: rgb(148 163 184 / 16%);
+	--line-bright: rgb(255 170 0 / 38%);
+	--surface: rgb(13 17 26 / 86%);
+	--surface-solid: #0d111a;
 	--font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
 	--font-body: 'Inter Variable', Inter, system-ui, sans-serif;
 	--content: min(90rem, calc(100vw - 2rem));
@@ -24,7 +24,7 @@
 	--radius-sm: 0.4rem;
 	--radius-md: 0.75rem;
 	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-	--shadow: 0 2rem 7rem rgb(0 0 0 / 38%);
+	--shadow: 0 2rem 7rem rgb(0 0 0 / 48%);
 }
 
 *,
@@ -43,7 +43,8 @@ body {
 	margin: 0;
 	min-width: 20rem;
 	background:
-		radial-gradient(circle at 18% 18%, rgb(64 96 72 / 12%), transparent 30rem),
+		radial-gradient(circle at 18% 18%, rgb(255 170 0 / 6%), transparent 32rem),
+		radial-gradient(circle at 82% 12%, rgb(0 212 255 / 5%), transparent 28rem),
 		var(--ink-950);
 	color: var(--sand-100);
 	font-family: var(--font-body);
@@ -237,7 +238,7 @@ h3 {
 	padding: 0.75rem 1.2rem;
 	border: 1px solid var(--line-bright);
 	border-radius: var(--radius-sm);
-	background: rgb(5 8 6 / 54%);
+	background: rgb(7 9 14 / 64%);
 	color: var(--sand-100);
 	font-family: var(--font-display);
 	font-size: 0.94rem;
@@ -255,7 +256,7 @@ h3 {
 
 .button:hover {
 	border-color: var(--signal-soft);
-	background: rgb(255 122 26 / 10%);
+	background: rgb(255 170 0 / 12%);
 	color: var(--sand-100);
 	transform: translateY(-2px);
 }
@@ -320,8 +321,8 @@ h3 {
 	padding-block: clamp(8rem, 16vw, 13rem) clamp(4rem, 8vw, 7rem);
 	border-bottom: 1px solid var(--line);
 	background:
-		linear-gradient(110deg, rgb(255 122 26 / 10%), transparent 35%),
-		radial-gradient(circle at 78% 15%, rgb(88 212 255 / 10%), transparent 22rem);
+		linear-gradient(110deg, rgb(255 170 0 / 10%), transparent 35%),
+		radial-gradient(circle at 78% 15%, rgb(0 212 255 / 10%), transparent 22rem);
 }
 
 .page-hero h1 {
@@ -339,9 +340,9 @@ h3 {
 	grid-template-columns: auto 1fr;
 	gap: 1rem;
 	padding: clamp(1.25rem, 3vw, 2rem);
-	border: 1px solid rgb(255 122 26 / 38%);
+	border: 1px solid rgb(255 170 0 / 38%);
 	border-radius: var(--radius-md);
-	background: rgb(255 122 26 / 7%);
+	background: rgb(255 170 0 / 7%);
 }
 
 .notice__mark {

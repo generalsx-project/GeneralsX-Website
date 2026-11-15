@@ -11,8 +11,8 @@ const year = new Date().getUTCFullYear();
 				Generals<strong>X</strong>
 			</a>
 			<p>
-				A community-built, cross-platform engine restoration for Command &amp; Conquer:
-				Generals and Zero Hour.
+				An open-source, cross-platform port of the original Command &amp; Conquer: Generals
+				and Zero Hour—built as a solid foundation for desktop, online, and community ports.
 			</p>
 		</div>
 
@@ -25,11 +25,11 @@ const year = new Date().getUTCFullYear();
 				<a href={site.license}>License</a>
 			</div>
 			<div>
-				<h2>Connect</h2>
-				<a href={site.issues}>Issues</a>
+				<h2>Online &amp; Ecosystem</h2>
+				<a href={site.stats}>Battle Stats &amp; Replays</a>
+				<a href={site.browserDemo}>Browser Demo (WebGPU)</a>
 				<a href={site.discussions}>Discussions</a>
 				<a href={site.sponsor}>Sponsor</a>
-				<a href={site.browserDemo}>Browser demo</a>
 			</div>
 		</div>
 	</div>
@@ -49,7 +49,7 @@ const year = new Date().getUTCFullYear();
 		padding: clamp(4rem, 8vw, 7rem) max(1rem, calc((100vw - min(90rem, calc(100vw - 2rem))) / 2));
 		border-top: 1px solid var(--line);
 		background:
-			linear-gradient(130deg, rgb(255 122 26 / 8%), transparent 32%),
+			linear-gradient(130deg, rgb(255 170 0 / 8%), transparent 32%),
 			var(--ink-900);
 	}
 
@@ -73,7 +73,7 @@ const year = new Date().getUTCFullYear();
 	}
 
 	.footer__mark strong {
-		color: var(--cyan);
+		color: var(--signal);
 		font-style: italic;
 	}
 
