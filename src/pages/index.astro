@@ -1,18 +1,17 @@
 ---
-import { Picture } from 'astro:assets';
-import CallToAction from '../components/CallToAction.astro';
+import { Image } from 'astro:assets';
 import FeatureCard from '../components/FeatureCard.astro';
 import Hero from '../components/Hero.astro';
-import ReleasePanel from '../components/ReleasePanel.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import generalsIcon from '../assets/brand/generalsx-icon.png';
-import splash from '../assets/brand/generalsx-splash.png';
-import zeroHourIcon from '../assets/brand/generalsx-zh-icon.png';
-import { pathFor, site } from '../data/site';
+import emblem from '../assets/brand/generalsx-emblem.png';
+import { docGroups } from '../data/docs';
+import { site } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getLatestRelease } from '../lib/releases';
+import { formatReleaseDate, getLatestRelease, type Edition, type Platform } from '../lib/releases';
 
 const release = await getLatestRelease();
+const editions: Edition[] = ['Zero Hour', 'Generals'];
+const platforms: Platform[] = ['Linux', 'macOS', 'Windows'];
 ---
 
 <BaseLayout>
@@ -20,52 +19,93 @@ const release = await getLatestRelease();
 
 	<section class="signal-strip" aria-label="Project highlights">
 		<div class="signal-strip__inner">
-			<div><strong>03</strong><span>Operating systems</span></div>
-			<div><strong>01</strong><span>Deterministic codebase</span></div>
-			<div><strong>20+</strong><span>Years of command</span></div>
-			<div><strong>GPL</strong><span>Open source</span></div>
+			<div><strong>03</strong><span>Desktop targets</span></div>
+			<div><strong>01</strong><span>Deterministic engine</span></div>
+			<div><strong>Online</strong><span>Cross-platform play</span></div>
+			<div><strong>GPL</strong><span>Open-source base</span></div>
 		</div>
 	</section>
 
-	<section class="section mission">
+	<section class="section mission" id="downloads">
 		<div class="container content-grid">
 			<div class="mission__copy">
-				<p class="eyebrow" data-reveal>Preserve the feel. Rebuild the foundation.</p>
-				<h2 data-reveal>The war room is no longer Windows-only.</h2>
+				<p class="eyebrow" data-reveal>Faithful port, not a remake</p>
+				<h2 data-reveal>The original game, freed from Windows-only limits.</h2>
 				<p class="lede" data-reveal>
-					GeneralsX keeps the retail game’s behavior intact while replacing its aging
-					platform layer with portable, maintainable systems.
+					GeneralsX does not reinvent Command &amp; Conquer: Generals. It keeps the retail
+					campaigns, factions, balance, and feel intact while replacing the aging platform
+					layer underneath.
 				</p>
 				<ul class="rule-list" data-reveal>
 					<li>
 						<span class="rule-list__number">01</span>
-						<span><strong>Retail compatible</strong><br /><span class="muted">Your original campaigns, maps, mods, and replays remain the mission.</span></span>
+						<span><strong>100% retail experience</strong><br /><span class="muted">Your original campaigns, skirmish AI, maps, mods, and replays remain intact.</span></span>
 					</li>
 					<li>
 						<span class="rule-list__number">02</span>
-						<span><strong>Cross-platform deterministic</strong><br /><span class="muted">Shared simulation rules keep Linux, macOS, and Windows on the same battlefield.</span></span>
+						<span><strong>Cross-platform online multiplayer</strong><br /><span class="muted">Deterministic simulation lets Linux, macOS, and Windows commanders play together online.</span></span>
 					</li>
 					<li>
 						<span class="rule-list__number">03</span>
-						<span><strong>Community maintained</strong><br /><span class="muted">Transparent source, public issues, reproducible releases, and upstream collaboration.</span></span>
+						<span><strong>A solid base for community ports</strong><br /><span class="muted">One clean C++ foundation that branches into WebGL, Android, iOS, VR, and more.</span></span>
 					</li>
 				</ul>
 			</div>
 
 			<div class="mission__visual panel" data-reveal data-depth>
-				<Picture
-					src={splash}
-					formats={['avif']}
-					fallbackFormat="webp"
-					widths={[560, 800, 1120]}
-					sizes="(max-width: 800px) 100vw, 50vw"
-					alt="GeneralsX tactical map artwork with aircraft, armor, and the project wordmark"
-					loading="lazy"
-				/>
-				<div class="mission__target" aria-hidden="true"></div>
+				<div class="arch-card__header">
+					<Image class="arch-card__emblem" src={emblem} alt="GeneralsX emblem" width={48} height={48} />
+					<div class="arch-card__title">
+						<span class="micro">Latest Release · {release.name}</span>
+						<strong>GeneralsX Hub</strong>
+					</div>
+					<div class="arch-card__release">
+						<span class="signal-dot"></span>
+						<span>{release.tag}</span>
+						<time datetime={release.publishedAt}>{formatReleaseDate(release.publishedAt)}</time>
+					</div>
+				</div>
+
+				{
+					editions.map((edition) => (
+						<div class="arch-card__group">
+							<span class="micro">Download · {edition}</span>
+							<div class="arch-card__pills">
+								{platforms.map((platform) => {
+									const asset = release.assets.find(
+										(candidate) =>
+											candidate.edition === edition && candidate.platform === platform,
+									);
+									if (!asset) {
+										throw new Error(`Missing ${platform} ${edition} download after validation.`);
+									}
+									return <a href={asset.url}>{platform} ↓</a>;
+								})}
+							</div>
+						</div>
+					))
+				}
+
+				<div class="arch-card__group">
+					<span class="micro">Cross-Platform Online</span>
+					<div class="arch-card__pills">
+						<a href={site.stats} target="_blank" rel="noreferrer">Battle Stats &amp; Replays ↗</a>
+					</div>
+				</div>
+
+				<div class="arch-card__group">
+					<span class="micro">Community Derivatives</span>
+					<div class="arch-card__pills arch-card__pills--muted">
+						<a href={site.browserDemo} target="_blank" rel="noreferrer">WebGL / WebGPU ↗</a>
+						<a href={site.androidPort} target="_blank" rel="noreferrer">Android ↗</a>
+						<a href={site.iosPort} target="_blank" rel="noreferrer">iOS ↗</a>
+						<a href={site.vrPort} target="_blank" rel="noreferrer">VR ↗</a>
+					</div>
+				</div>
+
 				<div class="mission__visual-meta micro">
-					<span>Platform layer / modernized</span>
-					<span>Gameplay / preserved</span>
+					<a href={site.gameFiles} target="_blank" rel="noreferrer">Get the game files ↗</a>
+					<a href={release.url} target="_blank" rel="noreferrer">Release notes ↗</a>
 				</div>
 			</div>
 		</div>
@@ -74,95 +114,126 @@ const release = await getLatestRelease();
 	<section class="section section--bordered systems">
 		<div class="container">
 			<SectionHeading
-				eyebrow="Modern systems. Original strategy."
-				title="A new platform under a legendary battlefield."
-				description="The engine evolves where it must and stays faithful where it matters."
+				eyebrow="Modernized platform layer"
+				title="Same strategy. Portable core."
+				description="Only the Windows-locked runtime dependencies are replaced—leaving the original game logic untouched."
 			/>
 			<div class="systems__grid">
 				<FeatureCard
 					number="01"
 					meta="Graphics"
-					title="Vulkan-backed rendering"
-					description="DXVK carries the original Direct3D 8 renderer onto a modern, portable graphics foundation."
+					title="DXVK & Vulkan"
+					description="Translates the original Direct3D 8 renderer onto Vulkan for native Linux and macOS performance."
 				/>
 				<FeatureCard
 					number="02"
 					meta="Platform"
-					title="Native windowing"
-					description="SDL3 replaces the Windows-only shell with one platform layer across every supported build."
+					title="SDL3 native shell"
+					description="Replaces Win32 windowing and input with a unified, portable layer across every target."
 				/>
 				<FeatureCard
 					number="03"
 					meta="Audio + video"
 					title="Open media stack"
-					description="OpenAL, MiniAudio, and FFmpeg replace legacy proprietary runtime dependencies."
+					description="OpenAL, MiniAudio, and FFmpeg replace legacy proprietary audio and video codecs."
 				/>
 			</div>
 		</div>
 	</section>
 
-	<section class="section section--bordered editions">
+	<section class="section section--bordered ecosystem" id="ecosystem">
 		<div class="container">
 			<SectionHeading
-				eyebrow="Choose your theater"
-				title="Two campaigns. One modern command."
-				description="Deploy the original Generals experience or the expanded Zero Hour battlefield."
+				eyebrow="Online & community derivatives"
+				title="One foundation. Many fronts."
+				description="GeneralsX powers cross-platform online play and serves as the base for independent community ports across mobile, web, and VR."
 			/>
-			<div class="editions__grid">
-				<article class="edition-card edition-card--zero" data-reveal>
-					<div class="edition-card__image">
-						<Picture
-							src={zeroHourIcon}
-							formats={['avif']}
-							fallbackFormat="webp"
-							widths={[320, 480, 650]}
-							sizes="(max-width: 580px) 80vw, 24rem"
-							alt="GeneralsX Zero Hour icon showing a fighter aircraft"
-							loading="lazy"
-						/>
+			<div class="ecosystem__grid">
+				<article class="ecosystem-card ecosystem-card--online" data-reveal>
+					<div class="ecosystem-card__top">
+						<span class="micro">Multiplayer &amp; telemetry</span>
+						<span class="ecosystem-badge">Live</span>
 					</div>
-					<div class="edition-card__body">
-						<span class="micro">Primary theater</span>
-						<h3>Zero Hour</h3>
-						<p>The expansion’s factions, generals, campaigns, and multiplayer—now on every supported platform.</p>
-						<a class="button button--text" href={pathFor('/downloads')}>
-							Get Zero Hour <span class="button__arrow" aria-hidden="true">→</span>
-						</a>
+					<h3>Cross-Platform Online</h3>
+					<p>
+						Play Zero Hour online across Linux, macOS, and Windows with Discord OAuth2
+						authentication, live leaderboards, and cloud replay archives.
+					</p>
+					<div class="ecosystem-card__links">
+						<a href={site.stats} target="_blank" rel="noreferrer">Battle Stats &amp; Replays ↗</a>
 					</div>
 				</article>
 
-				<article class="edition-card edition-card--generals" data-reveal>
-					<div class="edition-card__image">
-						<Picture
-							src={generalsIcon}
-							formats={['avif']}
-							fallbackFormat="webp"
-							widths={[320, 480, 650]}
-							sizes="(max-width: 580px) 80vw, 24rem"
-							alt="GeneralsX icon showing a tank and attack helicopter"
-							loading="lazy"
-						/>
+				<article class="ecosystem-card" data-reveal>
+					<div class="ecosystem-card__top">
+						<span class="micro">Community port</span>
+						<span class="ecosystem-badge">WebGPU</span>
 					</div>
-					<div class="edition-card__body">
-						<span class="micro">Original campaign</span>
-						<h3>Generals</h3>
-						<p>The 2003 strategy classic, stabilized and delivered through the same cross-platform engine.</p>
-						<a class="button button--text" href={pathFor('/downloads')}>
-							Get Generals <span class="button__arrow" aria-hidden="true">→</span>
-						</a>
+					<h3>Browser &amp; WebGL</h3>
+					<p>
+						A community WebAssembly and WebGPU port derived from the GeneralsX engine,
+						running the original game directly in modern browsers.
+					</p>
+					<div class="ecosystem-card__links">
+						<a href={site.browserDemo} target="_blank" rel="noreferrer">Launch Demo ↗</a>
+						<a href={site.wasmRepo} target="_blank" rel="noreferrer">wasm-generals ↗</a>
+					</div>
+				</article>
+
+				<article class="ecosystem-card" data-reveal>
+					<div class="ecosystem-card__top">
+						<span class="micro">Parallel projects</span>
+						<span class="ecosystem-badge">Community</span>
+					</div>
+					<h3>Android, iOS &amp; VR</h3>
+					<p>
+						Because GeneralsX standardizes on SDL3, Vulkan, and 64-bit C++, community
+						teams fork the same core to bring Generals to mobile touchscreens and VR.
+					</p>
+					<div class="ecosystem-card__links">
+						<a href={site.androidPort} target="_blank" rel="noreferrer">Android ↗</a>
+						<a href={site.iosPort} target="_blank" rel="noreferrer">iOS ↗</a>
+						<a href={site.vrPort} target="_blank" rel="noreferrer">VR ↗</a>
 					</div>
 				</article>
 			</div>
 		</div>
 	</section>
 
-	<section class="section section--bordered">
-		<div class="container" data-reveal>
-			<ReleasePanel release={release} compact />
+	<section class="section section--bordered" id="docs">
+		<div class="container">
+			<SectionHeading
+				eyebrow="Field manual"
+				title="Orders, clearly documented."
+				description="Player setup, contributor builds, and diagnostic references live beside the engine source."
+			/>
+
+			<div class="docs-grid">
+				{
+					docGroups.map((group) => (
+						<section class="docs-card" data-reveal>
+							<p class="eyebrow">{group.eyebrow}</p>
+							<h3>{group.title}</h3>
+							<p class="docs-card__desc">{group.description}</p>
+							<div class="docs-card__links">
+								{group.links.map((link) => (
+									<a href={link.href} target="_blank" rel="noreferrer">
+										<span>
+											<strong>{link.title}</strong>
+											<small>{link.description}</small>
+										</span>
+										<span aria-hidden="true">↗</span>
+									</a>
+								))}
+							</div>
+						</section>
+					))
+				}
+			</div>
 		</div>
 	</section>
 
-	<section class="section section--bordered source">
+	<section class="section section--bordered source" id="community">
 		<div class="container source__grid">
 			<div data-reveal>
 				<p class="eyebrow">Built in the open</p>
@@ -178,26 +249,38 @@ const release = await getLatestRelease();
 					<div><strong>64-bit</strong><span>modern platform target</span></div>
 				</div>
 				<div class="button-row">
-					<a class="button button--primary" href={site.repository}>
+					<a class="button button--primary" href={site.repository} target="_blank" rel="noreferrer">
 						Explore the source <span aria-hidden="true">↗</span>
 					</a>
-					<a class="button" href={pathFor('/community')}>Join the mission</a>
+					<a class="button" href={site.discussions} target="_blank" rel="noreferrer">
+						Join discussions <span aria-hidden="true">↗</span>
+					</a>
+					<a class="button" href={site.issues} target="_blank" rel="noreferrer">
+						Report an issue <span aria-hidden="true">↗</span>
+					</a>
 				</div>
 			</div>
 		</div>
-	</section>
 
-	<section class="section section--bordered">
-		<div class="container">
-			<CallToAction
-				eyebrow="No install. Same command."
-				title="Enter the browser theater."
-				description="A community WebAssembly and WebGPU port lets you experience GeneralsX directly in a compatible browser using game data you own."
-				primaryLabel="Launch browser demo"
-				primaryHref={site.browserDemo}
-				secondaryLabel="View web port"
-				secondaryHref="https://github.com/origami-ltd/wasm-generals"
-			/>
+		<div class="container lineage-row" data-reveal>
+			<article>
+				<span class="micro">Upstream stability</span>
+				<h3>TheSuperHackers</h3>
+				<p>Retail compatibility, fixes, maintenance, and the primary game-code foundation.</p>
+				<a href="https://github.com/TheSuperHackers/GeneralsGameCode" target="_blank" rel="noreferrer">View upstream ↗</a>
+			</article>
+			<article>
+				<span class="micro">Portability groundwork</span>
+				<h3>Fighter19 + feliwir</h3>
+				<p>SDL3, DXVK, OpenAL, FFmpeg, filesystem modernization, and Linux-focused reference work.</p>
+				<a href="https://github.com/Fighter19/CnC_Generals_Zero_Hour" target="_blank" rel="noreferrer">View project ↗</a>
+			</article>
+			<article>
+				<span class="micro">Integration + delivery</span>
+				<h3>GeneralsX contributors</h3>
+				<p>Cross-platform adaptation, deterministic builds, packaging, testing, and active releases.</p>
+				<a href={`${site.repository}/graphs/contributors`} target="_blank" rel="noreferrer">Meet contributors ↗</a>
+			</article>
 		</div>
 	</section>
 </BaseLayout>
@@ -263,78 +346,140 @@ const release = await getLatestRelease();
 	.mission__visual {
 		position: relative;
 		grid-column: 8 / -1;
-		min-height: 44rem;
-		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 1.75rem;
+		padding: clamp(1.75rem, 3.5vw, 2.75rem);
+		align-self: center;
+		background:
+			radial-gradient(circle at 85% 12%, rgb(255 170 0 / 10%), transparent 55%),
+			var(--surface-solid);
 		transform: perspective(60rem)
 			rotateX(calc(var(--pointer-y, 0) * -1.5deg))
 			rotateY(calc(var(--pointer-x, 0) * 1.5deg));
 		transition: transform 500ms var(--ease-out);
 	}
 
-	.mission__visual :global(picture),
-	.mission__visual :global(img) {
-		width: 100%;
-		height: 100%;
+	.arch-card__header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding-bottom: 1.25rem;
+		border-bottom: 1px solid var(--line);
 	}
 
-	.mission__visual :global(img) {
-		object-fit: cover;
+	.arch-card__title {
+		flex: 1;
+		min-width: 0;
 	}
 
-	.mission__visual::after {
-		position: absolute;
-		inset: 0;
-		background:
-			linear-gradient(180deg, transparent 55%, rgb(5 8 6 / 92%)),
-			linear-gradient(90deg, rgb(88 212 255 / 6%), transparent 35%);
-		content: '';
+	.arch-card__release {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 0.2rem 0.5rem;
+		color: var(--sand-400);
+		font-family: var(--font-display);
+		font-size: 0.78rem;
+		letter-spacing: 0.08em;
+		text-align: right;
+		text-transform: uppercase;
 	}
 
-	.mission__target {
-		position: absolute;
-		z-index: 2;
-		top: 22%;
-		left: 23%;
-		width: 6rem;
-		height: 6rem;
-		border: 1px solid rgb(255 122 26 / 70%);
-		border-radius: 50%;
-		box-shadow:
-			inset 0 0 1.5rem rgb(255 122 26 / 15%),
-			0 0 2rem rgb(255 122 26 / 18%);
+	.arch-card__release time {
+		grid-column: 1 / -1;
 	}
 
-	.mission__target::before,
-	.mission__target::after {
-		position: absolute;
-		background: rgb(255 122 26 / 70%);
-		content: '';
+	.arch-card__emblem {
+		width: 3rem;
+		height: 3rem;
+		border-radius: 0.5rem;
+		border: 1px solid rgb(255 170 0 / 30%);
+		background: rgb(7 9 14 / 75%);
+		padding: 0.25rem;
 	}
 
-	.mission__target::before {
-		top: 50%;
-		right: -1.3rem;
-		left: -1.3rem;
-		height: 1px;
+	.arch-card__title span {
+		display: block;
+		color: var(--signal-soft);
 	}
 
-	.mission__target::after {
-		top: -1.3rem;
-		bottom: -1.3rem;
-		left: 50%;
-		width: 1px;
+	.arch-card__title strong {
+		font-family: var(--font-display);
+		font-size: 1.6rem;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+
+	.arch-card__group {
+		display: grid;
+		gap: 0.65rem;
+	}
+
+	.arch-card__group > span {
+		color: var(--sand-400);
+	}
+
+	.arch-card__pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.arch-card__pills span,
+	.arch-card__pills a {
+		padding: 0.45rem 0.75rem;
+		border: 1px solid rgb(255 170 0 / 28%);
+		border-radius: var(--radius-sm);
+		background: rgb(255 170 0 / 8%);
+		color: var(--sand-100);
+		font-family: var(--font-display);
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		text-decoration: none;
+		text-transform: uppercase;
+		transition:
+			border-color 180ms ease,
+			background 180ms ease;
+	}
+
+	.arch-card__pills a:hover {
+		border-color: var(--signal-soft);
+		background: rgb(255 170 0 / 18%);
+	}
+
+	.arch-card__pills--muted span,
+	.arch-card__pills--muted a {
+		border-color: var(--line);
+		background: rgb(255 255 255 / 3%);
+		color: var(--sand-200);
+	}
+
+	.arch-card__pills--muted a:hover {
+		border-color: var(--signal-soft);
+		background: rgb(255 170 0 / 12%);
+		color: var(--sand-100);
 	}
 
 	.mission__visual-meta {
-		position: absolute;
-		z-index: 3;
-		right: 1.5rem;
-		bottom: 1.5rem;
-		left: 1.5rem;
 		display: flex;
 		justify-content: space-between;
 		gap: 1rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--line);
 		color: var(--sand-400);
+	}
+
+	.mission__visual-meta a {
+		color: var(--signal-soft);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.mission__visual-meta a:hover {
+		color: var(--sand-100);
 	}
 
 	.systems__grid {
@@ -346,64 +491,192 @@ const release = await getLatestRelease();
 		border-left: 0;
 	}
 
-	.editions__grid {
+	.ecosystem__grid {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		gap: 1rem;
 	}
 
-	.edition-card {
-		position: relative;
-		display: grid;
-		min-height: 35rem;
-		grid-template-columns: minmax(12rem, 0.9fr) minmax(16rem, 1.1fr);
-		align-items: center;
+	.ecosystem-card {
+		display: flex;
+		flex-direction: column;
+		padding: clamp(1.5rem, 3vw, 2.25rem);
 		border: 1px solid var(--line);
 		border-radius: var(--radius-md);
-		background: var(--surface-solid);
-		overflow: hidden;
+		background: var(--surface);
 	}
 
-	.edition-card::before {
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(circle at 15% 50%, rgb(88 212 255 / 16%), transparent 50%);
-		content: '';
+	.ecosystem-card--online {
+		border-color: rgb(255 170 0 / 35%);
+		background:
+			linear-gradient(145deg, rgb(255 170 0 / 8%), transparent 45%),
+			var(--surface);
 	}
 
-	.edition-card--generals::before {
-		background: radial-gradient(circle at 15% 50%, rgb(255 122 26 / 16%), transparent 50%);
+	.ecosystem-card__top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-bottom: 1.75rem;
+		color: var(--sand-400);
 	}
 
-	.edition-card__image,
-	.edition-card__body {
-		position: relative;
-		z-index: 1;
+	.ecosystem-badge {
+		padding: 0.25rem 0.6rem;
+		border: 1px solid rgb(255 170 0 / 32%);
+		border-radius: 999px;
+		background: rgb(255 170 0 / 10%);
+		color: var(--signal-soft);
+		font-family: var(--font-display);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
 	}
 
-	.edition-card__image {
-		margin-left: -30%;
+	.ecosystem-card h3 {
+		margin-bottom: 0.85rem;
 	}
 
-	.edition-card__image :global(img) {
-		filter: drop-shadow(0 1.5rem 3rem rgb(0 0 0 / 45%));
+	.ecosystem-card p {
+		color: var(--sand-400);
+		margin-bottom: 1.75rem;
 	}
 
-	.edition-card__body {
-		padding: 2rem 2rem 2rem 0;
+	.ecosystem-card__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.25rem;
+		margin-top: auto;
+		padding-top: 1.15rem;
+		border-top: 1px solid var(--line);
+		font-family: var(--font-display);
+		font-size: 0.9rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 	}
 
-	.edition-card__body > span {
+	.ecosystem-card__links a {
+		color: var(--signal-soft);
+		text-decoration: none;
+	}
+
+	.ecosystem-card__links a:hover {
+		color: var(--sand-100);
+	}
+
+	.docs-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+	}
+
+	.docs-card {
+		display: flex;
+		flex-direction: column;
+		padding: clamp(1.5rem, 3vw, 2.25rem);
+		border: 1px solid var(--line);
+		border-radius: var(--radius-md);
+		background: var(--surface);
+	}
+
+	.docs-card h3 {
+		margin-bottom: 0.65rem;
+	}
+
+	.docs-card__desc {
+		color: var(--sand-400);
+		margin-bottom: 1.5rem;
+	}
+
+	.docs-card__links {
+		display: grid;
+		margin-top: auto;
+		border-top: 1px solid var(--line);
+	}
+
+	.docs-card__links a {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 0.95rem;
+		color: var(--sand-200);
+		text-decoration: none;
+		transition: color 180ms ease;
+	}
+
+	.docs-card__links a + a {
+		border-top: 1px solid var(--line);
+	}
+
+	.docs-card__links a:hover {
 		color: var(--signal-soft);
 	}
 
-	.edition-card h3 {
-		margin: 0.4rem 0 1rem;
-		font-size: clamp(3rem, 6vw, 5rem);
+	.docs-card__links strong,
+	.docs-card__links small {
+		display: block;
 	}
 
-	.edition-card p {
+	.docs-card__links strong {
+		font-family: var(--font-display);
+		font-size: 1.1rem;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+
+	.docs-card__links small {
 		color: var(--sand-400);
+		font-size: 0.78rem;
+		line-height: 1.45;
+	}
+
+	.lineage-row {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+		margin-top: clamp(3rem, 6vw, 5rem);
+	}
+
+	.lineage-row article {
+		display: flex;
+		flex-direction: column;
+		padding: clamp(1.5rem, 3vw, 2rem);
+		border: 1px solid var(--line);
+		border-radius: var(--radius-md);
+		background: var(--surface);
+	}
+
+	.lineage-row article > span {
+		color: var(--signal-soft);
+		margin-bottom: 0.5rem;
+	}
+
+	.lineage-row h3 {
+		margin-bottom: 0.65rem;
+	}
+
+	.lineage-row p {
+		color: var(--sand-400);
+		margin-bottom: 1.25rem;
+	}
+
+	.lineage-row a {
+		margin-top: auto;
+		color: var(--signal-soft);
+		font-family: var(--font-display);
+		font-size: 0.9rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	.lineage-row a:hover {
+		color: var(--sand-100);
 	}
 
 	.source__grid {
@@ -450,12 +723,6 @@ const release = await getLatestRelease();
 		text-transform: uppercase;
 	}
 
-	@media (max-width: 72rem) {
-		.editions__grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
 	@media (max-width: 55rem) {
 		.signal-strip__inner {
 			grid-template-columns: repeat(2, 1fr);
@@ -475,11 +742,13 @@ const release = await getLatestRelease();
 		}
 
 		.mission__visual {
-			min-height: 35rem;
 			margin-top: 2rem;
 		}
 
-		.systems__grid {
+		.systems__grid,
+		.ecosystem__grid,
+		.docs-grid,
+		.lineage-row {
 			grid-template-columns: 1fr;
 		}
 
@@ -500,23 +769,6 @@ const release = await getLatestRelease();
 			flex-direction: column;
 			justify-content: center;
 			gap: 0.35rem;
-		}
-
-		.mission__visual {
-			min-height: 27rem;
-		}
-
-		.edition-card {
-			min-height: auto;
-			grid-template-columns: 1fr;
-		}
-
-		.edition-card__image {
-			margin: -18% 0 -8%;
-		}
-
-		.edition-card__body {
-			padding: 1.5rem;
 		}
 	}
 </style>

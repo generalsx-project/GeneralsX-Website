@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
-import splash from '../assets/brand/generalsx-splash.png';
-import { pathFor, site } from '../data/site';
+import splash from '../assets/brand/battlefield-splash.png';
+import { site } from '../data/site';
 import type { LatestRelease } from '../lib/releases';
 
 interface Props {
@@ -25,7 +25,6 @@ const { release } = Astro.props;
 		/>
 	</div>
 	<div class="hero__scrim" aria-hidden="true"></div>
-	<div class="hero__radar" aria-hidden="true"></div>
 
 	<div class="hero__content">
 		<div class="hero__status" data-reveal>
@@ -36,18 +35,18 @@ const { release } = Astro.props;
 		</div>
 
 		<div class="hero__copy">
-			<p class="eyebrow" data-reveal>Open-source engine restoration</p>
-			<h1 data-reveal>Classic command.<br /><span>Modern ground.</span></h1>
+			<p class="eyebrow" data-reveal>Cross-platform port · Original 2003 RTS</p>
+			<h1 data-reveal>The original Generals.<br /><span>Every platform.</span></h1>
 			<p class="hero__lede" data-reveal>
-				Generals and Zero Hour, rebuilt to deploy across Linux, macOS, and Windows from one
-				deterministic codebase.
+				Command &amp; Conquer: Generals and Zero Hour ported natively to Linux, macOS, and
+				Windows—preserving the retail game with cross-platform online multiplayer.
 			</p>
 			<div class="button-row" data-reveal>
-				<a class="button button--primary" href={pathFor('/downloads')}>
-					Deploy now <span class="button__arrow" aria-hidden="true">→</span>
+				<a class="button button--primary" href="#downloads">
+					Download <span class="button__arrow" aria-hidden="true">→</span>
 				</a>
-				<a class="button" href={site.browserDemo} target="_blank" rel="noreferrer">
-					Play in browser <span aria-hidden="true">↗</span>
+				<a class="button" href={site.stats} target="_blank" rel="noreferrer">
+					Battle Stats &amp; Replays <span aria-hidden="true">↗</span>
 				</a>
 			</div>
 		</div>
@@ -100,9 +99,9 @@ const { release } = Astro.props;
 
 	.hero__scrim {
 		background:
-			linear-gradient(90deg, rgb(5 8 6 / 94%) 0%, rgb(5 8 6 / 65%) 44%, rgb(5 8 6 / 22%) 75%),
-			linear-gradient(0deg, var(--ink-950) 0%, transparent 34%, rgb(5 8 6 / 15%) 80%),
-			linear-gradient(180deg, rgb(5 8 6 / 58%), transparent 24%);
+			linear-gradient(90deg, rgb(7 9 14 / 94%) 0%, rgb(7 9 14 / 68%) 44%, rgb(7 9 14 / 24%) 75%),
+			linear-gradient(0deg, var(--ink-950) 0%, transparent 34%, rgb(7 9 14 / 18%) 80%),
+			linear-gradient(180deg, rgb(7 9 14 / 58%), transparent 24%);
 	}
 
 	.hero__radar {
@@ -111,15 +110,15 @@ const { release } = Astro.props;
 		left: auto;
 		width: 60rem;
 		height: 60rem;
-		border: 1px solid rgb(255 122 26 / 20%);
+		border: 1px solid rgb(255 170 0 / 20%);
 		border-radius: 50%;
 		background:
-			linear-gradient(90deg, transparent 49.9%, rgb(255 122 26 / 20%) 50%, transparent 50.1%),
-			linear-gradient(transparent 49.9%, rgb(255 122 26 / 20%) 50%, transparent 50.1%);
+			linear-gradient(90deg, transparent 49.9%, rgb(255 170 0 / 20%) 50%, transparent 50.1%),
+			linear-gradient(transparent 49.9%, rgb(255 170 0 / 20%) 50%, transparent 50.1%);
 		box-shadow:
-			0 0 0 6rem rgb(255 122 26 / 2%),
-			0 0 0 12rem rgb(255 122 26 / 1.5%);
-		opacity: 0.8;
+			0 0 0 6rem rgb(255 170 0 / 2%),
+			0 0 0 12rem rgb(255 170 0 / 1.5%);
+		opacity: 0.72;
 	}
 
 	.hero__content {
@@ -198,7 +197,7 @@ const { release } = Astro.props;
 
 		.hero__scrim {
 			background:
-				linear-gradient(90deg, rgb(5 8 6 / 92%) 0%, rgb(5 8 6 / 58%) 75%, rgb(5 8 6 / 35%)),
+				linear-gradient(90deg, rgb(7 9 14 / 92%) 0%, rgb(7 9 14 / 60%) 75%, rgb(7 9 14 / 35%)),
 				linear-gradient(0deg, var(--ink-950) 0%, transparent 42%);
 		}
 

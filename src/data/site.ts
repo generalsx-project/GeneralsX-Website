@@ -9,9 +9,9 @@ export function pathFor(pathname = '/') {
 
 export const site = {
 	name: 'GeneralsX',
-	tagline: 'The battlefield, rebuilt for every platform.',
+	tagline: 'Command & Conquer: Generals & Zero Hour, Cross-Platform.',
 	description:
-		'GeneralsX brings Command & Conquer: Generals and Zero Hour to Linux, macOS, and Windows through one modern, open-source codebase.',
+		'GeneralsX is an open-source, cross-platform port of the original Command & Conquer: Generals and Zero Hour for Linux, macOS, and Windows, featuring cross-platform online multiplayer.',
 	repository: 'https://github.com/fbraz3/GeneralsX',
 	releases: 'https://github.com/fbraz3/GeneralsX/releases',
 	issues: 'https://github.com/fbraz3/GeneralsX/issues',
@@ -21,6 +21,12 @@ export const site = {
 	sponsor: 'https://github.com/sponsors/fbraz3',
 	license: 'https://github.com/fbraz3/GeneralsX/blob/main/LICENSE.md',
 	browserDemo: 'https://generals.wasm.ltd/',
+	wasmRepo: 'https://github.com/origami-ltd/wasm-generals',
+	androidPort: 'https://github.com/MYSOREZ/GeneralsZH-Android-Port/',
+	iosPort: 'https://github.com/ammaarreshi/Generals-Mac-iOS-iPad',
+	vrPort: 'https://github.com/Gonzorro/GeneralsVR',
+	stats: 'https://stats.generalsx.org',
+	login: 'https://login.generalsx.org',
 	installation:
 		'https://github.com/fbraz3/GeneralsX/blob/main/docs/HOWTO/INSTALLATION.md',
 	gameFiles:
@@ -29,7 +35,8 @@ export const site = {
 
 export const navigation = [
 	{ label: 'Home', href: pathFor('/') },
-	{ label: 'Downloads', href: pathFor('/downloads') },
-	{ label: 'Docs', href: pathFor('/docs') },
-	{ label: 'Community', href: pathFor('/community') },
+	{ label: 'Ecosystem', href: `${pathFor('/')}#ecosystem` },
+	{ label: 'Downloads', href: `${pathFor('/')}#downloads` },
+	{ label: 'Docs', href: `${pathFor('/')}#docs` },
+	{ label: 'Community', href: `${pathFor('/')}#community` },
 ] as const;
