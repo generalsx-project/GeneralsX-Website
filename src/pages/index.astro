@@ -87,6 +87,13 @@ const platforms: Platform[] = ['Linux', 'macOS', 'Windows'];
 				}
 
 				<div class="arch-card__group">
+					<span class="micro">Browser · WebAssembly + WebGPU (Single-Player)</span>
+					<div class="arch-card__pills">
+						<a href={site.playOnline} target="_blank" rel="noreferrer">Play Zero Hour in Browser ↗</a>
+					</div>
+				</div>
+
+				<div class="arch-card__group">
 					<span class="micro">Cross-Platform Online</span>
 					<div class="arch-card__pills">
 						<a href={site.stats} target="_blank" rel="noreferrer">Battle Stats &amp; Replays ↗</a>
@@ -94,12 +101,9 @@ const platforms: Platform[] = ['Linux', 'macOS', 'Windows'];
 				</div>
 
 				<div class="arch-card__group">
-					<span class="micro">Community Derivatives</span>
+					<span class="micro">Ecosystem &amp; Community Ports</span>
 					<div class="arch-card__pills arch-card__pills--muted">
-						<a href={site.browserDemo} target="_blank" rel="noreferrer">WebGL / WebGPU ↗</a>
-						<a href={site.androidPort} target="_blank" rel="noreferrer">Android ↗</a>
-						<a href={site.iosPort} target="_blank" rel="noreferrer">iOS ↗</a>
-						<a href={site.vrPort} target="_blank" rel="noreferrer">VR ↗</a>
+						<a href={site.ecosystemPorts} target="_blank" rel="noreferrer">Community Ports Directory ↗</a>
 					</div>
 				</div>
 
@@ -151,6 +155,22 @@ const platforms: Platform[] = ['Linux', 'macOS', 'Windows'];
 			<div class="ecosystem__grid">
 				<article class="ecosystem-card ecosystem-card--online" data-reveal>
 					<div class="ecosystem-card__top">
+						<span class="micro">WebAssembly + WebGPU</span>
+						<span class="ecosystem-badge">Single-Player</span>
+					</div>
+					<h3>Play Zero Hour in Browser</h3>
+					<p>
+						Play Command &amp; Conquer: Generals — Zero Hour directly in your browser at
+						play.generalsx.org with WebAssembly and WebGPU. Currently single-player—no
+						desktop installation required.
+					</p>
+					<div class="ecosystem-card__links">
+						<a href={site.playOnline} target="_blank" rel="noreferrer">Play Now ↗</a>
+					</div>
+				</article>
+
+				<article class="ecosystem-card" data-reveal>
+					<div class="ecosystem-card__top">
 						<span class="micro">Multiplayer &amp; telemetry</span>
 						<span class="ecosystem-badge">Live</span>
 					</div>
@@ -166,34 +186,16 @@ const platforms: Platform[] = ['Linux', 'macOS', 'Windows'];
 
 				<article class="ecosystem-card" data-reveal>
 					<div class="ecosystem-card__top">
-						<span class="micro">Community port</span>
-						<span class="ecosystem-badge">WebGPU</span>
+						<span class="micro">Community directory</span>
+						<span class="ecosystem-badge">GitHub</span>
 					</div>
-					<h3>Browser &amp; WebGL</h3>
+					<h3>Ecosystem &amp; Community Ports</h3>
 					<p>
-						A community WebAssembly and WebGPU port derived from the GeneralsX engine,
-						running the original game directly in modern browsers.
+						Explore active community ports, forks, and platform experiments—including mobile,
+						web, and VR—in the official centralized directory on GitHub Discussions.
 					</p>
 					<div class="ecosystem-card__links">
-						<a href={site.browserDemo} target="_blank" rel="noreferrer">Launch Demo ↗</a>
-						<a href={site.wasmRepo} target="_blank" rel="noreferrer">wasm-generals ↗</a>
-					</div>
-				</article>
-
-				<article class="ecosystem-card" data-reveal>
-					<div class="ecosystem-card__top">
-						<span class="micro">Parallel projects</span>
-						<span class="ecosystem-badge">Community</span>
-					</div>
-					<h3>Android, iOS &amp; VR</h3>
-					<p>
-						Because GeneralsX standardizes on SDL3, Vulkan, and 64-bit C++, community
-						teams fork the same core to bring Generals to mobile touchscreens and VR.
-					</p>
-					<div class="ecosystem-card__links">
-						<a href={site.androidPort} target="_blank" rel="noreferrer">Android ↗</a>
-						<a href={site.iosPort} target="_blank" rel="noreferrer">iOS ↗</a>
-						<a href={site.vrPort} target="_blank" rel="noreferrer">VR ↗</a>
+						<a href={site.ecosystemPorts} target="_blank" rel="noreferrer">View Ports Directory ↗</a>
 					</div>
 				</article>
 			</div>

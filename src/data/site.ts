@@ -20,11 +20,8 @@ export const site = {
 	contributing: 'https://github.com/fbraz3/GeneralsX/blob/main/CONTRIBUTING.md',
 	sponsor: 'https://github.com/sponsors/fbraz3',
 	license: 'https://github.com/fbraz3/GeneralsX/blob/main/LICENSE.md',
-	browserDemo: 'https://generals.wasm.ltd/',
-	wasmRepo: 'https://github.com/origami-ltd/wasm-generals',
-	androidPort: 'https://github.com/MYSOREZ/GeneralsZH-Android-Port/',
-	iosPort: 'https://github.com/ammaarreshi/Generals-Mac-iOS-iPad',
-	vrPort: 'https://github.com/Gonzorro/GeneralsVR',
+	playOnline: 'https://play.generalsx.org/',
+	ecosystemPorts: 'https://github.com/fbraz3/GeneralsX/discussions/436',
 	stats: 'https://stats.generalsx.org',
 	login: 'https://login.generalsx.org',
 	installation:
@@ -34,9 +31,10 @@ export const site = {
 } as const;
 
 export const navigation = [
-	{ label: 'Home', href: pathFor('/') },
-	{ label: 'Ecosystem', href: `${pathFor('/')}#ecosystem` },
-	{ label: 'Downloads', href: `${pathFor('/')}#downloads` },
-	{ label: 'Docs', href: `${pathFor('/')}#docs` },
-	{ label: 'Community', href: `${pathFor('/')}#community` },
+	{ label: 'Home', href: pathFor('/'), external: false },
+	{ label: 'Play in Browser', href: site.playOnline, external: true },
+	{ label: 'Ecosystem', href: `${pathFor('/')}#ecosystem`, external: false },
+	{ label: 'Downloads', href: `${pathFor('/')}#downloads`, external: false },
+	{ label: 'Docs', href: `${pathFor('/')}#docs`, external: false },
+	{ label: 'Community', href: `${pathFor('/')}#community`, external: false },
 ] as const;
