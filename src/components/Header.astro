@@ -30,8 +30,14 @@ const isCurrent = (href: string) => (href.replace(/\/+$/, '') || '/') === curren
 				{
 					navigation.map((item) => (
 						<li>
-							<a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+							<a
+								href={item.href}
+								aria-current={!item.external && isCurrent(item.href) ? 'page' : undefined}
+								target={item.external ? '_blank' : undefined}
+								rel={item.external ? 'noreferrer' : undefined}
+							>
 								{item.label}
+								{item.external && <span aria-hidden="true">&nbsp;↗</span>}
 							</a>
 						</li>
 					))

@@ -39,10 +39,14 @@ const { release } = Astro.props;
 			<h1 data-reveal>The original Generals.<br /><span>Every platform.</span></h1>
 			<p class="hero__lede" data-reveal>
 				Command &amp; Conquer: Generals and Zero Hour ported natively to Linux, macOS, and
-				Windows—preserving the retail game with cross-platform online multiplayer.
+				Windows with cross-platform online multiplayer—or play Zero Hour single-player
+				directly in your browser via WebAssembly + WebGPU.
 			</p>
 			<div class="button-row" data-reveal>
-				<a class="button button--primary" href="#downloads">
+				<a class="button button--primary" href={site.playOnline} target="_blank" rel="noreferrer">
+					Play in Browser <span aria-hidden="true">↗</span>
+				</a>
+				<a class="button" href="#downloads">
 					Download <span class="button__arrow" aria-hidden="true">→</span>
 				</a>
 				<a class="button" href={site.stats} target="_blank" rel="noreferrer">
